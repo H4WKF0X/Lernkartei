@@ -49,7 +49,6 @@ const ui = {
   frontText: byId('front-text'),
   backNumber: byId('back-number'),
   backText: byId('back-text'),
-  flipHint: byId('flip-hint'),
   answerWrong: /** @type {HTMLButtonElement} */ (byId('answer-wrong')),
   answerRight: /** @type {HTMLButtonElement} */ (byId('answer-right')),
   doneMessage: byId('done-message'),
@@ -512,7 +511,6 @@ function showCurrentCard(fade) {
   ui.backNumber.textContent = String(n);
   ui.frontText.innerHTML = renderCard(card.front, katex);
   ui.backText.innerHTML = renderCard(card.back, katex);
-  ui.flipHint.hidden = false;
 
   ui.cardInner.classList.add('instant');
   ui.cardInner.classList.remove('flipped');
@@ -555,7 +553,6 @@ function flipCard() {
   if (flipped) {
     active.revealed = true;
     setAnswersEnabled(true);
-    ui.flipHint.hidden = true;
   }
 }
 

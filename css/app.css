@@ -20,7 +20,7 @@
   --border: #000000;
   --muted: #666666;
   --border-width: 1.5px;
-  --radius: 4px;
+  --radius: 10px;
   color-scheme: light;
 }
 
@@ -72,11 +72,17 @@ body {
 .page {
   max-width: 720px;
   margin: 0 auto;
-  padding: 1.5rem 1rem 2rem;
+  padding: 2.25rem 1.5rem 2.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2.25rem;
   min-height: 100vh;
+}
+
+.view:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
 }
 
 h1 {
@@ -88,7 +94,7 @@ h1 {
 h2 {
   font-size: 1rem;
   font-weight: 700;
-  margin: 0 0 0.75rem;
+  margin: 0 0 1.25rem;
 }
 
 p {
@@ -99,7 +105,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .bar #session-progress {
@@ -122,7 +128,7 @@ p {
 .hint {
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  padding: 0.6rem 0.8rem;
+  padding: 0.85rem 1rem;
   font-size: 0.8rem;
   color: var(--muted);
   cursor: pointer;
@@ -144,7 +150,7 @@ select {
 .icon-button {
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  padding: 0.25rem 0.55rem;
+  padding: 0.45rem 0.75rem;
   font-size: 1.1rem;
   line-height: 1.2;
   cursor: pointer;
@@ -162,19 +168,19 @@ select {
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .tile {
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  padding: 0.9rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.5rem;
   text-align: left;
   cursor: pointer;
-  min-height: 5rem;
+  min-height: 6rem;
 }
 
 .tile-title {
@@ -243,13 +249,13 @@ select {
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  padding: 2.25rem 1.25rem 1.25rem;
+  padding: 3rem 1.75rem 1.75rem;
 }
 
 .card-number {
   position: absolute;
-  top: 0.6rem;
-  left: 0.9rem;
+  top: 0.9rem;
+  left: 1.25rem;
   font-size: 0.8rem;
   color: var(--muted);
 }
@@ -280,15 +286,15 @@ select {
 
 .answers {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .answer {
   flex: 1;
-  min-height: 48px;
+  min-height: 52px;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  padding: 0.6rem 0.8rem;
+  padding: 0.85rem 1rem;
   cursor: pointer;
 }
 
@@ -304,7 +310,7 @@ select {
   border-radius: var(--radius);
   background: var(--bg);
   color: var(--fg);
-  padding: 1.25rem;
+  padding: 1.75rem;
 }
 
 .settings::backdrop {
@@ -314,7 +320,7 @@ select {
 .settings-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.75rem;
 }
 
 .field {
@@ -327,7 +333,7 @@ select {
 .field select {
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  padding: 0.4rem 0.5rem;
+  padding: 0.6rem 0.7rem;
   width: 100%;
 }
 
@@ -337,8 +343,8 @@ select {
 
 @media (max-width: 480px) {
   .page {
-    padding: 1rem 0.75rem 1.25rem;
-    gap: 1.25rem;
+    padding: 1.5rem 1.15rem 1.75rem;
+    gap: 1.75rem;
   }
 
   .card {
@@ -346,14 +352,17 @@ select {
   }
 
   .answers {
-    gap: 0.75rem;
+    gap: 1rem;
+  }
+
+  .answer {
+    padding: 0.85rem 0.5rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
   }
 
   #view-session:not([hidden]) {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
   }
 
   #view-session:not([hidden]) .answers {
