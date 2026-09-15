@@ -1,35 +1,35 @@
 # Lernkartei
 
 Karteikarten für den NaWi-Unterricht, direkt im Browser. Das Repo ist die
-Website. Eine Datei, die Sie hier ablegen, ist nach etwa zwei Minuten live.
+Website. Eine neu abgelegte Datei ist nach etwa zwei Minuten live.
 
 ## Eine neue Themengruppe hinzufügen
 
-1. Öffnen Sie den Ordner `decks/` hier auf GitHub.
-2. Klicken Sie auf **Add file**, dann auf **Upload files**.
-3. Ziehen Sie Ihre Datei hinein und klicken Sie auf **Commit changes**.
-4. Warten Sie etwa zwei Minuten. Danach steht die neue Kachel auf der
+1. Den Ordner `decks/` hier auf GitHub öffnen.
+2. Auf **Add file** klicken, dann auf **Upload files**.
+3. Die Datei hineinziehen und auf **Commit changes** klicken.
+4. Etwa zwei Minuten warten. Danach steht die neue Kachel auf der
    Startseite.
 
-Mehr ist nicht zu tun. Die Liste der Decks entsteht von selbst. Bearbeiten
-Sie `decks/index.json` nicht von Hand.
+Mehr ist nicht zu tun. Die Liste der Decks entsteht von selbst.
+`decks/index.json` nicht von Hand bearbeiten.
 
 Der Name der Datei ist der Name des Speicherplatzes für den Fortschritt. Der
 Titel auf der Kachel kommt dagegen aus der Datei selbst, aus dem zweiten
-Argument Ihrer Karten.
+Argument der Karten.
 
 ## Wie die Datei aussehen muss
 
-Speichern Sie als **reinen Text** mit der Endung **`.tex`**. Endungen `.txt`
+Als **reinen Text** speichern, mit der Endung **`.tex`**. Die Endungen `.txt`
 und `.rtf` gehen auch, aber nur, wenn der Inhalt reiner Text ist.
 
-Speichern Sie nicht als Rich Text. Das macht zum Beispiel TextEdit auf dem
-Mac ohne Nachfrage. In TextEdit hilft **Format > In reinen Text umwandeln**
-vor dem Speichern. Die App sagt Ihnen, wenn eine Datei als Rich Text
-gespeichert ist.
+Nicht als Rich Text speichern. Das macht zum Beispiel TextEdit auf dem Mac
+ohne Nachfrage. In TextEdit hilft **Format > In reinen Text umwandeln** vor
+dem Speichern. Die App meldet es, wenn eine Datei als Rich Text gespeichert
+ist.
 
-Der Inhalt bleibt genau Ihre LaTeX-Datei, also die Datei, aus der Sie auch
-die Papierkarten drucken. Jede Karte steht zweimal darin:
+Der Inhalt bleibt genau die LaTeX-Datei, aus der auch die Papierkarten
+entstehen. Jede Karte steht zweimal darin:
 
 ```latex
 \frontcard{188}{Kernphysik}{Beschreibe den Aufbau eines Atoms.}
@@ -41,8 +41,8 @@ Datei ist egal.
 
 ## Damit Formeln erscheinen
 
-Schreiben Sie Formeln wie bisher, mit `\( ... \)` im Text und `\[ ... \]` für
-eine abgesetzte Zeile. Die App zeigt sie mit KaTeX an. Chemie mit `\ce{...}`
+Formeln bleiben wie bisher, mit `\( ... \)` im Text und `\[ ... \]` für eine
+abgesetzte Zeile. Die App zeigt sie mit KaTeX an. Chemie mit `\ce{...}`
 funktioniert ebenfalls.
 
 Eine Formel, die KaTeX nicht versteht, erscheint rot. Der Rest der Karte
@@ -52,21 +52,21 @@ bleibt lesbar.
 
 Auf der Kachel steht dann, was nicht stimmt. Es gibt drei Fälle:
 
-- **Als Rich Text gespeichert.** Speichern Sie die Datei noch einmal als
-  reinen Text und laden Sie sie erneut hoch.
+- **Als Rich Text gespeichert.** Die Datei noch einmal als reinen Text
+  speichern und erneut hochladen.
 - **Keine Karten gefunden.** In der Datei fehlt `\begin{document}`, oder es
   steht kein `\frontcard` darin.
-- **Datei nicht erreichbar.** Laden Sie die Seite neu. Bleibt es dabei, ist
-  die Datei nicht im Ordner `decks/` angekommen.
+- **Datei nicht erreichbar.** Die Seite neu laden. Bleibt es dabei, ist die
+  Datei nicht im Ordner `decks/` angekommen.
 
 Fehlt einer Karte die Rückseite, verschwindet nicht das ganze Deck. Die App
 zeigt beim Start einen kleinen Hinweis, und die Karte bleibt weg.
 
 ## Bedienung
 
-Karte antippen dreht sie um. Die beiden Knöpfe werden erst aktiv, wenn Sie
-die Lösung gesehen haben. Über das Zahnrad stellen Sie ein, wie oft Sie eine
-Karte wissen müssen, in welcher Reihenfolge die Karten kommen und ob die
+Ein Tipp auf die Karte dreht sie um. Die beiden Knöpfe werden erst aktiv,
+wenn die Lösung sichtbar war. Hinter dem Zahnrad steht, wie oft eine Karte
+gewusst sein muss, in welcher Reihenfolge die Karten kommen und ob die
 Ansicht hell oder dunkel ist.
 
 Der Fortschritt bleibt im Browser gespeichert, auch nach dem Schließen. Die
