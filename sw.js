@@ -7,7 +7,11 @@
  * Ohne Network-First sieht der Lehrer eine geänderte Datei zu spät.
  */
 
-const CACHE_NAME = 'lernkartei-v1';
+/*
+ * Diese Nummer muss bei jeder Änderung an den App-Dateien steigen. Sonst
+ * liefert der Cache die alten Dateien weiter.
+ */
+const CACHE_NAME = 'lernkartei-v2';
 
 const INDEX_FILE = 'decks/index.json';
 
