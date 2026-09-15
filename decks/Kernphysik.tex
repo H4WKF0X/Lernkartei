@@ -1,0 +1,137 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\geometry{paper=a4paper,top=0cm,bottom=0cm,left=0cm,right=0cm,headheight=0pt,headsep=0pt,footskip=0pt}
+\pagestyle{empty}
+\definecolor{examblue}{RGB}{0,70,130}
+\definecolor{examgreen}{RGB}{0,110,60}
+\definecolor{cardgray}{RGB}{248,248,248}
+\newlength{\cardw}\newlength{\cardh}
+\setlength{\cardw}{9.80cm}\setlength{\cardh}{5.24cm}
+\AddToShipoutPictureFG{\begin{tikzpicture}[remember picture,overlay]
+\draw[gray!70,densely dotted,line width=0.7pt]([xshift=10.5cm]current page.south west)--([xshift=10.5cm]current page.north west);
+\foreach \y in {5.94,11.88,17.82,23.76}{\draw[gray!70,densely dotted,line width=0.7pt]([yshift=\y cm]current page.south west)--([yshift=\y cm]current page.south east);}
+\end{tikzpicture}}
+\newcommand{\checkfeld}{\raisebox{-0.15ex}{\fbox{\rule{0pt}{1.15ex}\rule{1.15ex}{0pt}}}}
+\newcommand{\frontcard}[3]{\begin{tikzpicture}
+\node[draw=examblue,line width=0.8pt,rounded corners=4pt,fill=white,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=8pt](card){\Large\bfseries #3};
+\node[anchor=north west,fill=examblue,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examblue,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examblue,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\backcard}[3]{\begin{tikzpicture}
+\node[draw=examgreen,line width=0.8pt,rounded corners=4pt,fill=cardgray,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=9pt](card){\large #3};
+\node[anchor=north west,fill=examgreen,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examgreen,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examgreen,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\blankcard}{\begin{tikzpicture}\node[minimum width=\cardw,minimum height=\cardh]{};\end{tikzpicture}}
+\newcommand{\cardcell}[1]{\parbox[c][5.94cm][c]{10.50cm}{\centering #1}}
+\newcommand{\cardrow}[2]{\noindent\cardcell{#1}\cardcell{#2}\par}
+\begin{document}
+\setlength{\topskip}{0pt}
+\offinterlineskip
+% Karten 188 bis 217: Vorder- und Rueckseiten
+\cardrow
+{\frontcard{188}{Kernphysik}{Beschreibe den Aufbau eines Atoms.}}
+{\frontcard{189}{Kernphysik}{Beschreibe den Aufbau des Atomkerns.}}
+\cardrow
+{\frontcard{190}{Kernphysik}{Was versteht man unter einem Isotop?}}
+{\frontcard{191}{Kernphysik}{Welcher Kernbaustein ist für ein Element immer gleich?}}
+\cardrow
+{\frontcard{192}{Kernphysik}{Beschreibe die Kernkraft in ihren wesentlichen Punkten.}}
+{\frontcard{193}{Kernphysik}{Was ist der Massendefekt?}}
+\cardrow
+{\frontcard{194}{Kernphysik}{Wie wird Energie bei der Kernspaltung gewonnen?}}
+{\frontcard{195}{Kernphysik}{Wie wird Energie bei der Kernfusion gewonnen?}}
+\cardrow
+{\frontcard{196}{Kernphysik}{Was ist Alphastrahlung?}}
+{\frontcard{197}{Kernphysik}{Was ist Gammastrahlung?}}
+\newpage
+\cardrow
+{\backcard{189}{Kernphysik}{Der Kern besteht aus Protonen und Neutronen, den Nukleonen, die durch die starke Kernkraft gebunden sind.}}
+{\backcard{188}{Kernphysik}{Ein Atom besteht aus kleinem Kern mit Protonen und Neutronen sowie einer Elektronenhülle; neutral gilt Protonenzahl gleich Elektronenzahl.}}
+\cardrow
+{\backcard{191}{Kernphysik}{Die Protonenzahl beziehungsweise Ordnungszahl.}}
+{\backcard{190}{Kernphysik}{Atome desselben Elements mit gleicher Protonenzahl, aber unterschiedlicher Neutronen- und Massenzahl.}}
+\cardrow
+{\backcard{193}{Kernphysik}{Die Kernmasse ist kleiner als die Summe der freien Nukleonenmassen; \(E=\Delta m c^2\) entspricht der Bindungsenergie.}}
+{\backcard{192}{Kernphysik}{Sie wirkt zwischen Nukleonen, ist sehr stark und kurzreichweitig, meist anziehend und bei extrem kleinen Abständen abstoßend.}}
+\cardrow
+{\backcard{195}{Kernphysik}{Leichte Kerne verschmelzen; der Massendefekt wird gemäß \(E=\Delta m c^2\) als Energie frei.}}
+{\backcard{194}{Kernphysik}{Ein schwerer Kern wird gespalten; der Massendefekt wird gemäß \(E=\Delta m c^2\) als Energie frei.}}
+\cardrow
+{\backcard{197}{Kernphysik}{Hochenergetische elektromagnetische Strahlung aus angeregten Kernen; ungeladen und sehr durchdringend.}}
+{\backcard{196}{Kernphysik}{Heliumkerne aus zwei Protonen und zwei Neutronen; zweifach positiv, stark ionisierend und wenig durchdringend.}}
+\newpage
+\cardrow
+{\frontcard{198}{Kernphysik}{Was ist Betastrahlung?}}
+{\frontcard{199}{Kernphysik}{Gib die allgemeine Zerfallsgleichung für Gammastrahlung an.}}
+\cardrow
+{\frontcard{200}{Kernphysik}{Gib die allgemeine Zerfallsgleichung für Alphastrahlung an.}}
+{\frontcard{201}{Kernphysik}{Gib die allgemeine Zerfallsgleichung für den Beta-plus-Zerfall an.}}
+\cardrow
+{\frontcard{202}{Kernphysik}{Was versteht man unter einer Zerfallsreihe?}}
+{\frontcard{203}{Kernphysik}{Wie lautet das Zerfallsgesetz?}}
+\cardrow
+{\frontcard{204}{Kernphysik}{Beschreibe die Größen- und Massenverhältnisse in einem Atom.}}
+{\frontcard{205}{Kernphysik}{Gib die allgemeine Zerfallsgleichung für den Beta-minus-Zerfall an.}}
+\cardrow
+{\frontcard{206}{Kernphysik}{Definiere die physikalische Größe Aktivität. Gib auch Formelzeichen und SI-Einheit an.}}
+{\frontcard{207}{Kernphysik}{Definiere die physikalische Größe Energiedosis. Gib auch Formelzeichen und SI-Einheit an.}}
+\newpage
+\cardrow
+{\backcard{199}{Kernphysik}{\({}^{A}_{Z}X^*\rightarrow{}^{A}_{Z}X+\gamma\).}}
+{\backcard{198}{Kernphysik}{Beim \(\beta^-\)-Zerfall entstehen Elektron und Antineutrino, beim \(\beta^+\)-Zerfall Positron und Neutrino.}}
+\cardrow
+{\backcard{201}{Kernphysik}{\({}^{A}_{Z}X\rightarrow{}^{A}_{Z-1}Y+e^++\nu_e\).}}
+{\backcard{200}{Kernphysik}{\({}^{A}_{Z}X\rightarrow{}^{A-4}_{Z-2}Y+{}^{4}_{2}\mathrm{He}\).}}
+\cardrow
+{\backcard{203}{Kernphysik}{\(N(t)=N_0e^{-\lambda t}\), außerdem \(T_{1/2}=\ln2/\lambda\).}}
+{\backcard{202}{Kernphysik}{Eine Folge radioaktiver Zerfälle über instabile Tochterkerne bis zu einem stabilen Endkern.}}
+\cardrow
+{\backcard{205}{Kernphysik}{\({}^{A}_{Z}X\rightarrow{}^{A}_{Z+1}Y+e^-+\overline{\nu}_e\).}}
+{\backcard{204}{Kernphysik}{Atom etwa \(10^{-10}\,\mathrm m\), Kern etwa \(10^{-15}\,\mathrm m\); fast die ganze Masse liegt im Kern.}}
+\cardrow
+{\backcard{207}{Kernphysik}{Absorbierte Energie pro Masse: \(D=E_\mathrm{abs}/m\); SI-Einheit Gray, \(1\,\mathrm{Gy}=1\,\mathrm{J/kg}\).}}
+{\backcard{206}{Kernphysik}{Zerfälle pro Zeit: \(A=-\mathrm dN/\mathrm dt=\lambda N\); SI-Einheit Becquerel, \(1\,\mathrm{Bq}=1\,\mathrm{s^{-1}}\).}}
+\newpage
+\cardrow
+{\frontcard{208}{Kernphysik}{Definiere die physikalische Größe Äquivalentdosis. Gib auch Formelzeichen und SI-Einheit an.}}
+{\frontcard{209}{Kernphysik}{Was versteht man unter ionisierender Strahlung?}}
+\cardrow
+{\frontcard{210}{Kernphysik}{Beschreibe in den wesentlichen Punkten die biologische Strahlenwirkung.}}
+{\frontcard{211}{Kernphysik}{Wie kann man sich vor radioaktiver Strahlung schützen?}}
+\cardrow
+{\frontcard{212}{Kernphysik}{Benenne drei Hauptkomponenten eines typischen thermischen Reaktorkerns.}}
+{\frontcard{213}{Kernphysik}{Was ist die Aufgabe des Moderators?}}
+\cardrow
+{\frontcard{214}{Kernphysik}{Was ist die Aufgabe eines Regelstabes?}}
+{\frontcard{215}{Kernphysik}{Was versteht man unter der kritischen Masse?}}
+\cardrow
+{\frontcard{216}{Kernphysik}{Was passiert bei der Kernfusion?}}
+{\frontcard{217}{Kernphysik}{Unter welchen Bedingungen ist Kernfusion möglich?}}
+\newpage
+\cardrow
+{\backcard{209}{Kernphysik}{Strahlung mit genügend Energie, Elektronen aus Atomen oder Molekülen zu entfernen und Ionen zu erzeugen.}}
+{\backcard{208}{Kernphysik}{Biologisch gewichtete Dosis: \(H=\sum_R w_R D_R\); SI-Einheit Sievert.}}
+\cardrow
+{\backcard{211}{Kernphysik}{ALARA: Zeit kurz, Abstand groß, geeignete Abschirmung; außerdem Kontamination vermeiden und Dosimeter verwenden.}}
+{\backcard{210}{Kernphysik}{Sie kann Moleküle und DNA direkt oder über Radikale schädigen; Folgen hängen von Dosis, Strahlungsart, Gewebe und Zeitverlauf ab.}}
+\cardrow
+{\backcard{213}{Kernphysik}{Er bremst schnelle Neutronen ab, ohne sie möglichst stark zu absorbieren.}}
+{\backcard{212}{Kernphysik}{Brennelemente, Moderator und Regelstäbe; zusätzlich führt ein Kühlsystem Wärme ab.}}
+\cardrow
+{\backcard{215}{Kernphysik}{Kleinste Materialmenge, bei der unter gegebenen Bedingungen eine selbsterhaltende Kettenreaktion möglich ist.}}
+{\backcard{214}{Kernphysik}{Er absorbiert Neutronen und regelt dadurch Leistung beziehungsweise Abschaltung der Kettenreaktion.}}
+\cardrow
+{\backcard{217}{Kernphysik}{Extrem heißes Plasma, genügend hohe Teilchendichte und ausreichend lange Einschlusszeit.}}
+{\backcard{216}{Kernphysik}{Zwei leichte Kerne verschmelzen zu einem schwereren; ein Teil der Masse wird in Energie umgewandelt.}}
+\end{document}

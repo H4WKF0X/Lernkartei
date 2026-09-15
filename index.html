@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lernkartei</title>
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icons/icon-192.png" sizes="192x192" />
+    <link rel="stylesheet" href="vendor/katex/katex.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <script src="vendor/katex/katex.min.js" defer></script>
+    <script src="vendor/katex/mhchem.min.js" defer></script>
+    <script type="module" src="js/app.js"></script>
+  </head>
+  <body>
+    <div class="page">
+      <p id="storage-hint" class="hint" hidden>
+        Der Fortschritt kann in diesem Browser nicht gespeichert werden.
+      </p>
+
+      <section id="view-home" class="view">
+        <header class="bar">
+          <h1>Lernkartei</h1>
+          <button type="button" id="open-settings" class="icon-button" aria-label="Einstellungen">
+            <span aria-hidden="true">&#9881;</span>
+          </button>
+        </header>
+
+        <p id="home-message" class="message" hidden></p>
+        <button type="button" id="reload-index" class="text-button" hidden>Neu laden</button>
+
+        <div id="deck-grid" class="grid"></div>
+
+        <section id="open-sessions" hidden>
+          <h2>Offene Sessions</h2>
+          <div id="session-grid" class="grid"></div>
+        </section>
+      </section>
+
+      <section id="view-session" class="view" hidden>
+        <header class="bar">
+          <button type="button" id="leave-session" class="text-button" aria-label="Zurück zur Übersicht">
+            &#8592; <span id="session-title"></span>
+          </button>
+          <p id="session-progress" class="meta" aria-live="polite"></p>
+          <button type="button" id="open-settings-session" class="icon-button" aria-label="Einstellungen">
+            <span aria-hidden="true">&#9881;</span>
+          </button>
+        </header>
+
+        <p id="session-warnings" class="hint" hidden></p>
+
+        <button type="button" id="card" class="card" aria-live="polite">
+          <span class="card-inner" id="card-inner">
+            <span class="card-face card-front">
+              <span class="card-body">
+                <span class="card-number" id="front-number"></span>
+                <span class="card-text" id="front-text"></span>
+              </span>
+            </span>
+            <span class="card-face card-back">
+              <span class="card-body">
+                <span class="card-number" id="back-number"></span>
+                <span class="card-text" id="back-text"></span>
+              </span>
+            </span>
+          </span>
+        </button>
+
+        <p id="flip-hint" class="meta center">Zum Umdrehen tippen oder Leertaste drücken.</p>
+
+        <div class="answers">
+          <button type="button" id="answer-wrong" class="answer" disabled>Nicht gewusst</button>
+          <button type="button" id="answer-right" class="answer" disabled>Gewusst</button>
+        </div>
+      </section>
+
+      <section id="view-done" class="view" hidden>
+        <header class="bar">
+          <h1 id="done-title">Fertig</h1>
+        </header>
+        <p id="done-message" class="message"></p>
+        <div class="answers">
+          <button type="button" id="restart" class="answer">Nochmal</button>
+          <button type="button" id="to-home" class="answer">Zur Übersicht</button>
+        </div>
+      </section>
+    </div>
+
+    <dialog id="resume" class="settings">
+      <div class="settings-form">
+        <h2>Session fortsetzen?</h2>
+        <p id="resume-message" class="message"></p>
+        <div class="answers">
+          <button type="button" id="resume-continue" class="answer">Fortsetzen</button>
+          <button type="button" id="resume-restart" class="answer">Neu starten</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="settings" class="settings">
+      <form method="dialog" class="settings-form">
+        <h2>Einstellungen</h2>
+
+        <label class="field">
+          <span>Richtige Antworten bis eine Karte raus ist</span>
+          <input type="number" id="setting-required" min="1" max="5" step="1" inputmode="numeric" />
+          <span class="meta">Eine Karte verlässt die Session, wenn sie so oft als gewusst bewertet wurde.</span>
+        </label>
+
+        <label class="field">
+          <span>Reihenfolge</span>
+          <select id="setting-order">
+            <option value="random">Zufällig</option>
+            <option value="sequential">Nach Kartennummer</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Darstellung</span>
+          <select id="setting-theme">
+            <option value="auto">Automatisch</option>
+            <option value="light">Hell</option>
+            <option value="dark">Dunkel</option>
+          </select>
+        </label>
+
+        <button type="button" id="clear-progress" class="text-button">Fortschritt löschen</button>
+
+        <div class="settings-actions">
+          <button type="submit" class="answer">Schließen</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

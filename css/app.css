@@ -1,0 +1,369 @@
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../vendor/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../vendor/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #ffffff;
+  --fg: #000000;
+  --border: #000000;
+  --muted: #666666;
+  --border-width: 1.5px;
+  --radius: 4px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #141414;
+    --fg: #f2f2f2;
+    --border: #f2f2f2;
+    --muted: #8a8a8a;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #141414;
+  --fg: #f2f2f2;
+  --border: #f2f2f2;
+  --muted: #8a8a8a;
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --bg: #ffffff;
+  --fg: #000000;
+  --border: #000000;
+  --muted: #666666;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+p {
+  margin: 0;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.bar #session-progress {
+  margin-left: auto;
+}
+
+.meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.center {
+  text-align: center;
+}
+
+.message {
+  font-size: 1rem;
+}
+
+.hint {
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.8rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+}
+
+.icon-button {
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.25rem 0.55rem;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.text-button {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.tile {
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: left;
+  cursor: pointer;
+  min-height: 5rem;
+}
+
+.tile-title {
+  font-size: 1rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.tile[disabled] {
+  cursor: not-allowed;
+  border-style: dashed;
+  color: var(--muted);
+}
+
+.card {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 260px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  perspective: 1200px;
+  cursor: pointer;
+  transition: opacity 160ms linear;
+}
+
+.card.fading {
+  opacity: 0;
+}
+
+.card-inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-inner.instant {
+  transition: none;
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.card-body {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 2.25rem 1.25rem 1.25rem;
+}
+
+.card-number {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.9rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.card-text {
+  display: block;
+  max-width: 60ch;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.math-inline {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  vertical-align: bottom;
+}
+
+.katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.answers {
+  display: flex;
+  gap: 1rem;
+}
+
+.answer {
+  flex: 1;
+  min-height: 48px;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+}
+
+.answer[disabled] {
+  cursor: not-allowed;
+  color: var(--muted);
+  border-color: var(--muted);
+}
+
+.settings {
+  width: min(28rem, calc(100vw - 2rem));
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+  padding: 1.25rem;
+}
+
+.settings::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field input,
+.field select {
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.5rem;
+  width: 100%;
+}
+
+.settings-actions {
+  display: flex;
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 1rem 0.75rem 1.25rem;
+    gap: 1.25rem;
+  }
+
+  .card {
+    min-height: 220px;
+  }
+
+  .answers {
+    gap: 0.75rem;
+  }
+
+  #view-session:not([hidden]) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  #view-session:not([hidden]) .answers {
+    margin-top: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card-inner {
+    transition: none;
+  }
+}
