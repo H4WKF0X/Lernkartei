@@ -1,2 +1,8 @@
 CLAUDE.md
 docs/
+
+# Dateien, die Betriebssysteme nebenbei anlegen
+.DS_Store
+._*
+Thumbs.db
+desktop.ini
