@@ -1,17 +1,21 @@
 /**
  * Service Worker der Lernkartei.
  *
- * Die App-Shell und vendor/ laufen über Cache-First. Die Deck-Dateien und
- * decks/index.json laufen über Network-First mit dem Cache als Rückfall.
- * GitHub Pages liefert Dateien mit einer Cache-Dauer von etwa zehn Minuten.
- * Ohne Network-First sieht der Lehrer eine geänderte Datei zu spät.
+ * Es gibt drei Regeln:
+ *
+ * vendor/ läuft über Cache-First. KaTeX und die Schriften ändern sich nie.
+ *
+ * Die App-Dateien laufen über Stale-While-Revalidate. Die Seite zeigt sofort
+ * die Fassung aus dem Cache und holt im Hintergrund die neue. So kommt eine
+ * Änderung ohne eine neue Cache-Nummer an.
+ *
+ * Die Deck-Dateien und decks/index.json laufen über Network-First mit dem
+ * Cache als Rückfall. GitHub Pages liefert Dateien mit einer Cache-Dauer von
+ * etwa zehn Minuten. Ohne Network-First sieht der Lehrer eine geänderte
+ * Datei zu spät.
  */
 
-/*
- * Diese Nummer muss bei jeder Änderung an den App-Dateien steigen. Sonst
- * liefert der Cache die alten Dateien weiter.
- */
-const CACHE_NAME = 'lernkartei-v2';
+const CACHE_NAME = 'lernkartei-v3';
 
 const INDEX_FILE = 'decks/index.json';
 
@@ -122,6 +126,16 @@ function isDeckRequest(url) {
 }
 
 /**
+ * Sagt, ob eine Anfrage zu den mitgelieferten Bibliotheken gehört.
+ *
+ * @param {URL} url Die Adresse der Anfrage.
+ * @returns {boolean} true bei einer Datei unter vendor/.
+ */
+function isVendorRequest(url) {
+  return url.pathname.includes('/vendor/');
+}
+
+/**
  * Holt eine Antwort aus dem Netz und legt sie in den Cache.
  *
  * @param {Request} request Die Anfrage.
@@ -129,6 +143,26 @@ function isDeckRequest(url) {
  */
 async function fetchAndStore(request) {
   const response = await fetch(request);
+  if (response.ok) {
+    const cache = await caches.open(CACHE_NAME);
+    await cache.put(request.url, response.clone());
+  }
+  return response;
+}
+
+/**
+ * Holt eine Datei am Browser-Cache vorbei und legt sie in den Cache.
+ *
+ * Ohne diesen Schritt fragt der Browser seinen eigenen Cache und sieht eine
+ * geänderte Datei nicht. Die Anfrage geht mit no-cache, also mit einer
+ * Rückfrage beim Server. Bleibt die Datei gleich, antwortet er mit 304.
+ *
+ * @param {Request} request Die ursprüngliche Anfrage.
+ * @returns {Promise<Response>} Die Antwort aus dem Netz.
+ */
+async function revalidate(request) {
+  const fresh = new Request(request.url, { cache: 'no-cache', credentials: 'same-origin' });
+  const response = await fetch(fresh);
   if (response.ok) {
     const cache = await caches.open(CACHE_NAME);
     await cache.put(request.url, response.clone());
@@ -163,21 +197,33 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  if (isVendorRequest(url)) {
+    event.respondWith(
+      (async () => {
+        const cached = await caches.match(request, { ignoreSearch: true });
+        return cached ?? (await fetchAndStore(request));
+      })(),
+    );
+    return;
+  }
+
   event.respondWith(
     (async () => {
       const cached = await caches.match(request, { ignoreSearch: true });
+      const update = revalidate(request).catch(() => undefined);
       if (cached !== undefined) {
+        event.waitUntil(update);
         return cached;
       }
-      try {
-        return await fetchAndStore(request);
-      } catch (error) {
-        const fallback = await caches.match('index.html');
-        if (request.mode === 'navigate' && fallback !== undefined) {
-          return fallback;
-        }
-        throw error;
+      const fresh = await update;
+      if (fresh !== undefined) {
+        return fresh;
       }
+      const fallback = await caches.match('index.html');
+      if (request.mode === 'navigate' && fallback !== undefined) {
+        return fallback;
+      }
+      return Response.error();
     })(),
   );
 });
