@@ -71,3 +71,16 @@ Ansicht hell oder dunkel ist.
 
 Der Fortschritt bleibt im Browser gespeichert, auch nach dem Schließen. Die
 App läuft nach dem ersten Besuch auch ohne Internet.
+
+## Lizenzen
+
+Im Repo liegen zwei verschiedene Werke, darum gibt es zwei Lizenzen.
+
+- Der Programmcode steht unter der MIT-Lizenz, siehe `LICENSE`.
+- Die Karteninhalte in `decks/` stehen unter CC BY-SA 4.0, siehe
+  `decks/LICENSE`. Wer sie weitergibt, nennt den Urheber und gibt
+  Bearbeitungen unter derselben Lizenz weiter.
+
+Dazu kommen zwei fremde Bestandteile. KaTeX steht unter der MIT-Lizenz, siehe
+`vendor/katex/LICENSE-KaTeX.txt`. Die Schrift JetBrains Mono steht unter der
+SIL Open Font License 1.1, siehe `vendor/fonts/LICENSE-JetBrainsMono-OFL.txt`.
