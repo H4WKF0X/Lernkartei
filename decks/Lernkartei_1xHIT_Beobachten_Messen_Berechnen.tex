@@ -1,0 +1,137 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\geometry{paper=a4paper,top=0cm,bottom=0cm,left=0cm,right=0cm,headheight=0pt,headsep=0pt,footskip=0pt}
+\pagestyle{empty}
+\definecolor{examblue}{RGB}{0,70,130}
+\definecolor{examgreen}{RGB}{0,110,60}
+\definecolor{cardgray}{RGB}{248,248,248}
+\newlength{\cardw}\newlength{\cardh}
+\setlength{\cardw}{9.80cm}\setlength{\cardh}{5.24cm}
+\AddToShipoutPictureFG{\begin{tikzpicture}[remember picture,overlay]
+\draw[gray!70,densely dotted,line width=0.7pt]([xshift=10.5cm]current page.south west)--([xshift=10.5cm]current page.north west);
+\foreach \y in {5.94,11.88,17.82,23.76}{\draw[gray!70,densely dotted,line width=0.7pt]([yshift=\y cm]current page.south west)--([yshift=\y cm]current page.south east);}
+\end{tikzpicture}}
+\newcommand{\checkfeld}{\raisebox{-0.15ex}{\fbox{\rule{0pt}{1.15ex}\rule{1.15ex}{0pt}}}}
+\newcommand{\frontcard}[3]{\begin{tikzpicture}
+\node[draw=examblue,line width=0.8pt,rounded corners=4pt,fill=white,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=8pt](card){\Large\bfseries #3};
+\node[anchor=north west,fill=examblue,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examblue,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examblue,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\backcard}[3]{\begin{tikzpicture}
+\node[draw=examgreen,line width=0.8pt,rounded corners=4pt,fill=cardgray,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=9pt](card){\large #3};
+\node[anchor=north west,fill=examgreen,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examgreen,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examgreen,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\blankcard}{\begin{tikzpicture}\node[minimum width=\cardw,minimum height=\cardh]{};\end{tikzpicture}}
+\newcommand{\cardcell}[1]{\parbox[c][5.94cm][c]{10.50cm}{\centering #1}}
+\newcommand{\cardrow}[2]{\noindent\cardcell{#1}\cardcell{#2}\par}
+\begin{document}
+\setlength{\topskip}{0pt}
+\offinterlineskip
+% Karten 1 bis 29: Vorder- und Rueckseiten
+\cardrow
+{\frontcard{1}{Beobachten, Messen \& Berechnen}{Was versteht man unter einer normierten Gleitkommazahl?}}
+{\frontcard{2}{Beobachten, Messen \& Berechnen}{Was ist das Verhältnis der Größen von Atom und Atomkern?}}
+\cardrow
+{\frontcard{3}{Beobachten, Messen \& Berechnen}{Wie werden Zehnerpotenzen multipliziert?}}
+{\frontcard{4}{Beobachten, Messen \& Berechnen}{Wie werden Zehnerpotenzen dividiert?}}
+\cardrow
+{\frontcard{5}{Beobachten, Messen \& Berechnen}{Wie werden Zehnerpotenzen potenziert?}}
+{\frontcard{6}{Beobachten, Messen \& Berechnen}{Was bedeutet eine negative Hochzahl bei einer Zehnerpotenz?}}
+\cardrow
+{\frontcard{7}{Beobachten, Messen \& Berechnen}{Was sind die drei Kennzeichen der modernen Wissenschaft?}}
+{\frontcard{8}{Beobachten, Messen \& Berechnen}{Was versteht man unter Ockhams Rasiermesser?}}
+\cardrow
+{\frontcard{9}{Beobachten, Messen \& Berechnen}{Was ist das SI-System?}}
+{\frontcard{10}{Beobachten, Messen \& Berechnen}{Für welche Zehnerpotenz steht die Vorsilbe Tera (T)?}}
+\newpage
+\cardrow
+{\backcard{2}{Beobachten, Messen \& Berechnen}{Ein Atom ist im Durchmesser etwa \(10^5\)-mal größer als sein Kern: Atom ca. \(10^{-10}\,\mathrm m\), Kern ca. \(10^{-15}\,\mathrm m\).}}
+{\backcard{1}{Beobachten, Messen \& Berechnen}{Eine Zahl der Form \(m\cdot10^n\) mit ganzzahligem \(n\) und \(1\le |m|<10\).}}
+\cardrow
+{\backcard{4}{Beobachten, Messen \& Berechnen}{Bei gleicher Basis werden die Exponenten subtrahiert: \(10^a/10^b=10^{a-b}\).}}
+{\backcard{3}{Beobachten, Messen \& Berechnen}{Bei gleicher Basis werden die Exponenten addiert: \(10^a\cdot10^b=10^{a+b}\).}}
+\cardrow
+{\backcard{6}{Beobachten, Messen \& Berechnen}{Ein negativer Exponent bezeichnet den Kehrwert: \(10^{-n}=1/10^n\).}}
+{\backcard{5}{Beobachten, Messen \& Berechnen}{Beim Potenzieren werden die Exponenten multipliziert: \((10^a)^b=10^{ab}\).}}
+\cardrow
+{\backcard{8}{Beobachten, Messen \& Berechnen}{Von mehreren gleich gut erklärenden Modellen wird das einfachste mit den wenigsten unnötigen Annahmen bevorzugt.}}
+{\backcard{7}{Beobachten, Messen \& Berechnen}{Objektivität, Reproduzierbarkeit und Falsifizierbarkeit.}}
+\cardrow
+{\backcard{10}{Beobachten, Messen \& Berechnen}{Tera (T) steht für \(10^{12}\).}}
+{\backcard{9}{Beobachten, Messen \& Berechnen}{Das Internationale Einheitensystem ist das weltweit vereinbarte System physikalischer Einheiten mit sieben Basiseinheiten.}}
+\newpage
+\cardrow
+{\frontcard{11}{Beobachten, Messen \& Berechnen}{Für welche Zehnerpotenz steht die Vorsilbe Giga (G)?}}
+{\frontcard{12}{Beobachten, Messen \& Berechnen}{Für welche Zehnerpotenz steht die Vorsilbe Mega (M)?}}
+\cardrow
+{\frontcard{13}{Beobachten, Messen \& Berechnen}{Für welche Zehnerpotenz steht die Vorsilbe Kilo (k)?}}
+{\frontcard{14}{Beobachten, Messen \& Berechnen}{Für welche Zehnerpotenz steht die Vorsilbe Dezi (d)?}}
+\cardrow
+{\frontcard{15}{Beobachten, Messen \& Berechnen}{Für welche Zehnerpotenz steht die Vorsilbe Zenti (c)?}}
+{\frontcard{16}{Beobachten, Messen \& Berechnen}{Für welche Zehnerpotenz steht die Vorsilbe Milli (m)?}}
+\cardrow
+{\frontcard{17}{Beobachten, Messen \& Berechnen}{Für welche Zehnerpotenz steht die Vorsilbe Mikro (\(\mu\))?}}
+{\frontcard{18}{Beobachten, Messen \& Berechnen}{Für welche Zehnerpotenz steht die Vorsilbe Nano (n)?}}
+\cardrow
+{\frontcard{19}{Beobachten, Messen \& Berechnen}{Für welche Zehnerpotenz steht die Vorsilbe Piko (p)?}}
+{\frontcard{20}{Beobachten, Messen \& Berechnen}{Wie lautet die Formel für die Dichte?}}
+\newpage
+\cardrow
+{\backcard{12}{Beobachten, Messen \& Berechnen}{Mega (M) steht für \(10^6\).}}
+{\backcard{11}{Beobachten, Messen \& Berechnen}{Giga (G) steht für \(10^9\).}}
+\cardrow
+{\backcard{14}{Beobachten, Messen \& Berechnen}{Dezi (d) steht für \(10^{-1}\).}}
+{\backcard{13}{Beobachten, Messen \& Berechnen}{Kilo (k) steht für \(10^3\).}}
+\cardrow
+{\backcard{16}{Beobachten, Messen \& Berechnen}{Milli (m) steht für \(10^{-3}\).}}
+{\backcard{15}{Beobachten, Messen \& Berechnen}{Zenti (c) steht für \(10^{-2}\).}}
+\cardrow
+{\backcard{18}{Beobachten, Messen \& Berechnen}{Nano (n) steht für \(10^{-9}\).}}
+{\backcard{17}{Beobachten, Messen \& Berechnen}{Mikro (\(\mu\)) steht für \(10^{-6}\).}}
+\cardrow
+{\backcard{20}{Beobachten, Messen \& Berechnen}{\(\displaystyle \rho=\frac{m}{V}\). Dichte ist Masse durch Volumen.}}
+{\backcard{19}{Beobachten, Messen \& Berechnen}{Piko (p) steht für \(10^{-12}\).}}
+\newpage
+\cardrow
+{\frontcard{21}{Beobachten, Messen \& Berechnen}{Wofür steht \(\rho\) in der Formel \(\rho\)=m/V? Gib auch die SI-Einheit an!}}
+{\frontcard{22}{Beobachten, Messen \& Berechnen}{Wofür steht m in der Formel \(\rho\)=m/V? Gib auch die SI-Einheit an!}}
+\cardrow
+{\frontcard{23}{Beobachten, Messen \& Berechnen}{Wofür steht V in der Formel \(\rho\)=m/V? Gib auch die SI-Einheit an!}}
+{\frontcard{24}{Beobachten, Messen \& Berechnen}{Welche Dichte hat Wasser bei alltäglichen Umgebungsbedingungen?}}
+\cardrow
+{\frontcard{25}{Beobachten, Messen \& Berechnen}{Was versteht man unter einem absoluten Messfehler?}}
+{\frontcard{26}{Beobachten, Messen \& Berechnen}{Was versteht man unter einem relativen Messfehler?}}
+\cardrow
+{\frontcard{27}{Beobachten, Messen \& Berechnen}{Was versteht man unter einem systematischen Messfehler?}}
+{\frontcard{28}{Beobachten, Messen \& Berechnen}{Wie können systematische Messfehler reduziert oder vermieden werden?}}
+\cardrow
+{\frontcard{29}{Beobachten, Messen \& Berechnen}{Was versteht man unter einem zufälligen bzw. statistischen Messfehler?}}
+{\blankcard}
+\newpage
+\cardrow
+{\backcard{22}{Beobachten, Messen \& Berechnen}{\(m\) steht für die Masse. SI-Einheit: \(\mathrm{kg}\).}}
+{\backcard{21}{Beobachten, Messen \& Berechnen}{\(\rho\) steht für die Dichte. SI-Einheit: \(\mathrm{kg/m^3}\).}}
+\cardrow
+{\backcard{24}{Beobachten, Messen \& Berechnen}{Ungefähr \(1000\,\mathrm{kg/m^3}\), entsprechend \(1{,}0\,\mathrm{g/cm^3}\).}}
+{\backcard{23}{Beobachten, Messen \& Berechnen}{\(V\) steht für das Volumen. SI-Einheit: \(\mathrm{m^3}\).}}
+\cardrow
+{\backcard{26}{Beobachten, Messen \& Berechnen}{Absoluter Fehler bezogen auf den Referenzwert: \(\delta=\Delta x/|x_\mathrm{ref}|\), häufig in Prozent.}}
+{\backcard{25}{Beobachten, Messen \& Berechnen}{Betrag der Abweichung: \(\Delta x=|x_\mathrm{mess}-x_\mathrm{ref}|\). Er hat dieselbe Einheit wie die Messgröße.}}
+\cardrow
+{\backcard{28}{Beobachten, Messen \& Berechnen}{Durch Kalibrieren, Nullabgleich, Kontrolle der Geräte und Vergleich mit Referenzwerten oder unabhängigen Verfahren.}}
+{\backcard{27}{Beobachten, Messen \& Berechnen}{Eine gleichgerichtete, reproduzierbare Abweichung, etwa durch ein falsch kalibriertes Messgerät.}}
+\cardrow
+{\blankcard}
+{\backcard{29}{Beobachten, Messen \& Berechnen}{Eine zufällige Streuung um einen Mittelwert. Viele Messungen und Mittelwertbildung verringern ihren Einfluss.}}
+\end{document}

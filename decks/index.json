@@ -1,7 +1,61 @@
 [
   {
-    "id": "kernphysik",
-    "file": "decks/Kernphysik.tex",
+    "id": "lernkartei-1xhit-beobachten-messen-berechnen",
+    "file": "decks/Lernkartei_1xHIT_Beobachten_Messen_Berechnen.tex",
+    "title": "Beobachten, Messen & Berechnen",
+    "count": 29
+  },
+  {
+    "id": "lernkartei-1xhit-chemie",
+    "file": "decks/Lernkartei_1xHIT_Chemie.tex",
+    "title": "Chemie",
+    "count": 31
+  },
+  {
+    "id": "lernkartei-1xhit-physik",
+    "file": "decks/Lernkartei_1xHIT_Physik.tex",
+    "title": "Physik",
+    "count": 30
+  },
+  {
+    "id": "lernkartei-2xhit-anorganische-chemie",
+    "file": "decks/Lernkartei_2xHIT_Anorganische_Chemie.tex",
+    "title": "Anorganische Chemie",
+    "count": 29
+  },
+  {
+    "id": "lernkartei-2xhit-organische-chemie",
+    "file": "decks/Lernkartei_2xHIT_Organische_Chemie.tex",
+    "title": "Organische Chemie",
+    "count": 12
+  },
+  {
+    "id": "lernkartei-3xhit-licht-und-materie",
+    "file": "decks/Lernkartei_3xHIT_Licht_und_Materie.tex",
+    "title": "Licht und Materie",
+    "count": 17
+  },
+  {
+    "id": "lernkartei-3xhit-srt-art",
+    "file": "decks/Lernkartei_3xHIT_SRT&ART.tex",
+    "title": "SRT & ART",
+    "count": 11
+  },
+  {
+    "id": "lernkartei-3xhit-wie-das-universum-funktioniert",
+    "file": "decks/Lernkartei_3xHIT_Wie_das_Universum_funktioniert.tex",
+    "title": "Wie das Universum funktioniert",
+    "count": 16
+  },
+  {
+    "id": "lernkartei-4xhit-bausteine-des-universums",
+    "file": "decks/Lernkartei_4xHIT_Bausteine_des_Universums.tex",
+    "title": "Bausteine des Universums",
+    "count": 12
+  },
+  {
+    "id": "lernkartei-4xhit-kernphysik",
+    "file": "decks/Lernkartei_4xHIT_Kernphysik.tex",
     "title": "Kernphysik",
     "count": 30
   }

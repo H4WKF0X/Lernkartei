@@ -1,0 +1,137 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\geometry{paper=a4paper,top=0cm,bottom=0cm,left=0cm,right=0cm,headheight=0pt,headsep=0pt,footskip=0pt}
+\pagestyle{empty}
+\definecolor{examblue}{RGB}{0,70,130}
+\definecolor{examgreen}{RGB}{0,110,60}
+\definecolor{cardgray}{RGB}{248,248,248}
+\newlength{\cardw}\newlength{\cardh}
+\setlength{\cardw}{9.80cm}\setlength{\cardh}{5.24cm}
+\AddToShipoutPictureFG{\begin{tikzpicture}[remember picture,overlay]
+\draw[gray!70,densely dotted,line width=0.7pt]([xshift=10.5cm]current page.south west)--([xshift=10.5cm]current page.north west);
+\foreach \y in {5.94,11.88,17.82,23.76}{\draw[gray!70,densely dotted,line width=0.7pt]([yshift=\y cm]current page.south west)--([yshift=\y cm]current page.south east);}
+\end{tikzpicture}}
+\newcommand{\checkfeld}{\raisebox{-0.15ex}{\fbox{\rule{0pt}{1.15ex}\rule{1.15ex}{0pt}}}}
+\newcommand{\frontcard}[3]{\begin{tikzpicture}
+\node[draw=examblue,line width=0.8pt,rounded corners=4pt,fill=white,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=8pt](card){\Large\bfseries #3};
+\node[anchor=north west,fill=examblue,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examblue,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examblue,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\backcard}[3]{\begin{tikzpicture}
+\node[draw=examgreen,line width=0.8pt,rounded corners=4pt,fill=cardgray,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=9pt](card){\large #3};
+\node[anchor=north west,fill=examgreen,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examgreen,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examgreen,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\blankcard}{\begin{tikzpicture}\node[minimum width=\cardw,minimum height=\cardh]{};\end{tikzpicture}}
+\newcommand{\cardcell}[1]{\parbox[c][5.94cm][c]{10.50cm}{\centering #1}}
+\newcommand{\cardrow}[2]{\noindent\cardcell{#1}\cardcell{#2}\par}
+\begin{document}
+\setlength{\topskip}{0pt}
+\offinterlineskip
+% Karten 91 bis 119: Vorder- und Rueckseiten
+\cardrow
+{\frontcard{91}{Anorganische Chemie}{Definiere eine Säure.}}
+{\frontcard{92}{Anorganische Chemie}{Definiere eine Base.}}
+\cardrow
+{\frontcard{93}{Anorganische Chemie}{Gib die Summenformel eines Oxonium-Ions an.}}
+{\frontcard{94}{Anorganische Chemie}{Gib die Summenformel eines Hydroxid-Ions an.}}
+\cardrow
+{\frontcard{95}{Anorganische Chemie}{Erkläre den Begriff Ampholyt und gib ein Beispiel an.}}
+{\frontcard{96}{Anorganische Chemie}{Was ist der pH-Wert?}}
+\cardrow
+{\frontcard{97}{Anorganische Chemie}{Wie kann der pH-Wert gemessen werden?}}
+{\frontcard{98}{Anorganische Chemie}{Wie ändert sich der pH-Wert einer sauren oder basischen Lösung, wenn sie mit Wasser verdünnt wird?}}
+\cardrow
+{\frontcard{99}{Anorganische Chemie}{Was sind Edukte und Produkte einer Neutralisationsreaktion?}}
+{\frontcard{100}{Anorganische Chemie}{Was ist ein Puffer bzw. eine Pufferlösung?}}
+\newpage
+\cardrow
+{\backcard{92}{Anorganische Chemie}{Eine Base ist nach Brønsted ein Protonenakzeptor.}}
+{\backcard{91}{Anorganische Chemie}{Eine Säure ist nach Brønsted ein Protonendonator.}}
+\cardrow
+{\backcard{94}{Anorganische Chemie}{\(\mathrm{OH^-}\).}}
+{\backcard{93}{Anorganische Chemie}{\(\mathrm{H_3O^+}\).}}
+\cardrow
+{\backcard{96}{Anorganische Chemie}{Ein Maß für den sauren oder basischen Charakter: \(\mathrm{pH}=-\log_{10}(c(\mathrm{H_3O^+})/c^\circ)\).}}
+{\backcard{95}{Anorganische Chemie}{Ein Ampholyt kann als Säure oder Base reagieren, zum Beispiel Wasser.}}
+\cardrow
+{\backcard{98}{Anorganische Chemie}{Der pH-Wert nähert sich 7: saure Lösungen steigen, basische Lösungen sinken.}}
+{\backcard{97}{Anorganische Chemie}{Mit Indikatorpapier, Farbindikator oder genauer mit einem kalibrierten pH-Meter.}}
+\cardrow
+{\backcard{100}{Anorganische Chemie}{Eine Pufferlösung hält den pH-Wert bei kleinen Säure- oder Basenzugaben annähernd konstant.}}
+{\backcard{99}{Anorganische Chemie}{Edukte sind Säure und Base; Produkte sind Salz und Wasser. Teilchenreaktion: \(\mathrm{H_3O^++OH^-\to2H_2O}\).}}
+\newpage
+\cardrow
+{\frontcard{101}{Anorganische Chemie}{Gib die Gleichung und Einheit der Konzentration c an.}}
+{\frontcard{102}{Anorganische Chemie}{Was ist eine Oxidationsreaktion?}}
+\cardrow
+{\frontcard{103}{Anorganische Chemie}{Was ist eine Reduktionsreaktion?}}
+{\frontcard{104}{Anorganische Chemie}{Definiere den Begriff Oxidationsmittel und nenne Beispiele.}}
+\cardrow
+{\frontcard{105}{Anorganische Chemie}{Definiere den Begriff Reduktionsmittel und nenne Beispiele.}}
+{\frontcard{106}{Anorganische Chemie}{Was gibt die Oxidationszahl an?}}
+\cardrow
+{\frontcard{107}{Anorganische Chemie}{Welche Regel gilt für die Summe der Oxidationszahlen in einem Molekül?}}
+{\frontcard{108}{Anorganische Chemie}{Welche Regel gilt für die Summe der Oxidationszahlen in einem Ion?}}
+\cardrow
+{\frontcard{109}{Anorganische Chemie}{Nenne die zentrale Regel, um Atomen in einer Verbindung Oxidationszahlen zuzuweisen.}}
+{\frontcard{110}{Anorganische Chemie}{Welche Oxidationszahlen haben Halogene und Sauerstoff in Verbindungen meistens?}}
+\newpage
+\cardrow
+{\backcard{102}{Anorganische Chemie}{Oxidation ist Elektronenabgabe; die Oxidationszahl steigt.}}
+{\backcard{101}{Anorganische Chemie}{\(c=n/V\); SI-Einheit \(\mathrm{mol/m^3}\), häufig \(\mathrm{mol/L}\).}}
+\cardrow
+{\backcard{104}{Anorganische Chemie}{Ein Oxidationsmittel nimmt Elektronen auf und wird reduziert, etwa \(\mathrm{O_2}\), \(\mathrm{Cl_2}\) oder \(\mathrm{MnO_4^-}\).}}
+{\backcard{103}{Anorganische Chemie}{Reduktion ist Elektronenaufnahme; die Oxidationszahl sinkt.}}
+\cardrow
+{\backcard{106}{Anorganische Chemie}{Eine formale Ladungszahl, die die formale Elektronenzuordnung anzeigt.}}
+{\backcard{105}{Anorganische Chemie}{Ein Reduktionsmittel gibt Elektronen ab und wird oxidiert, etwa \(\mathrm{H_2}\), CO oder Zn.}}
+\cardrow
+{\backcard{108}{Anorganische Chemie}{In einem Ion entspricht die Summe der Gesamtladung des Ions.}}
+{\backcard{107}{Anorganische Chemie}{In einem neutralen Molekül ist die Summe aller Oxidationszahlen null.}}
+\cardrow
+{\backcard{110}{Anorganische Chemie}{Halogene meist \(-I\), Sauerstoff meist \(-II\); Ausnahmen sind etwa Peroxide und Fluorverbindungen.}}
+{\backcard{109}{Anorganische Chemie}{Bindungselektronen werden formal dem elektronegativeren Atom zugeordnet; bei gleichen Atomen gleich geteilt.}}
+\newpage
+\cardrow
+{\frontcard{111}{Anorganische Chemie}{Welche Oxidationszahl haben Metalle der 1. und 2. Hauptgruppe in Verbindungen?}}
+{\frontcard{112}{Anorganische Chemie}{Welche beiden Erhaltungsgrößen sind beim Aufstellen von Reaktionsgleichungen wichtig?}}
+\cardrow
+{\frontcard{113}{Anorganische Chemie}{Wann zeigt die Änderung der Oxidationszahl eine Oxidation an?}}
+{\frontcard{114}{Anorganische Chemie}{Wann zeigt die Änderung der Oxidationszahl eine Reduktion an?}}
+\cardrow
+{\frontcard{115}{Anorganische Chemie}{Wie löst man eine Redox-Gleichung?}}
+{\frontcard{116}{Anorganische Chemie}{Was sind die Produkte einer Reaktion?}}
+\cardrow
+{\frontcard{117}{Anorganische Chemie}{Was sind die Edukte einer Reaktion?}}
+{\frontcard{118}{Anorganische Chemie}{Gib den Zusammenhang zwischen Stoffmenge, Masse und molarer Masse an.}}
+\cardrow
+{\frontcard{119}{Anorganische Chemie}{Gib den Zusammenhang zwischen Konzentration, Stoffmenge und Volumen an.}}
+{\blankcard}
+\newpage
+\cardrow
+{\backcard{112}{Anorganische Chemie}{Atomanzahl jedes Elements und elektrische Gesamtladung müssen erhalten bleiben.}}
+{\backcard{111}{Anorganische Chemie}{1. Hauptgruppe: \(+I\); 2. Hauptgruppe: \(+II\).}}
+\cardrow
+{\backcard{114}{Anorganische Chemie}{Wenn die Oxidationszahl sinkt; das Atom nimmt Elektronen auf.}}
+{\backcard{113}{Anorganische Chemie}{Wenn die Oxidationszahl steigt; das Atom gibt Elektronen ab.}}
+\cardrow
+{\backcard{116}{Anorganische Chemie}{Produkte entstehen bei der Reaktion und stehen rechts vom Reaktionspfeil.}}
+{\backcard{115}{Anorganische Chemie}{Oxidationszahlen bestimmen, Teilgleichungen bilden, Atome und Ladungen ausgleichen, Elektronenzahlen angleichen und addieren.}}
+\cardrow
+{\backcard{118}{Anorganische Chemie}{\(n=m/M\).}}
+{\backcard{117}{Anorganische Chemie}{Edukte sind Ausgangsstoffe und stehen links vom Reaktionspfeil.}}
+\cardrow
+{\blankcard}
+{\backcard{119}{Anorganische Chemie}{\(c=n/V\), entsprechend \(n=cV\).}}
+\end{document}

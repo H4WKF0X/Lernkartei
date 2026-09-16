@@ -1,0 +1,169 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\geometry{paper=a4paper,top=0cm,bottom=0cm,left=0cm,right=0cm,headheight=0pt,headsep=0pt,footskip=0pt}
+\pagestyle{empty}
+\definecolor{examblue}{RGB}{0,70,130}
+\definecolor{examgreen}{RGB}{0,110,60}
+\definecolor{cardgray}{RGB}{248,248,248}
+\newlength{\cardw}\newlength{\cardh}
+\setlength{\cardw}{9.80cm}\setlength{\cardh}{5.24cm}
+\AddToShipoutPictureFG{\begin{tikzpicture}[remember picture,overlay]
+\draw[gray!70,densely dotted,line width=0.7pt]([xshift=10.5cm]current page.south west)--([xshift=10.5cm]current page.north west);
+\foreach \y in {5.94,11.88,17.82,23.76}{\draw[gray!70,densely dotted,line width=0.7pt]([yshift=\y cm]current page.south west)--([yshift=\y cm]current page.south east);}
+\end{tikzpicture}}
+\newcommand{\checkfeld}{\raisebox{-0.15ex}{\fbox{\rule{0pt}{1.15ex}\rule{1.15ex}{0pt}}}}
+\newcommand{\frontcard}[3]{\begin{tikzpicture}
+\node[draw=examblue,line width=0.8pt,rounded corners=4pt,fill=white,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=8pt](card){\Large\bfseries #3};
+\node[anchor=north west,fill=examblue,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examblue,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examblue,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\backcard}[3]{\begin{tikzpicture}
+\node[draw=examgreen,line width=0.8pt,rounded corners=4pt,fill=cardgray,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=9pt](card){\large #3};
+\node[anchor=north west,fill=examgreen,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examgreen,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examgreen,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\blankcard}{\begin{tikzpicture}\node[minimum width=\cardw,minimum height=\cardh]{};\end{tikzpicture}}
+\newcommand{\cardcell}[1]{\parbox[c][5.94cm][c]{10.50cm}{\centering #1}}
+\newcommand{\cardrow}[2]{\noindent\cardcell{#1}\cardcell{#2}\par}
+\begin{document}
+\setlength{\topskip}{0pt}
+\offinterlineskip
+% Karten 30 bis 60: Vorder- und Rueckseiten
+\cardrow
+{\frontcard{30}{Chemie}{Beschreibe das Rutherford-Modell.}}
+{\frontcard{31}{Chemie}{Beschreibe das Bohr'sche Atommodell.}}
+\cardrow
+{\frontcard{32}{Chemie}{Beschreibe das wellenmechanische Atommodell.}}
+{\frontcard{33}{Chemie}{Gib das Größenverhältnis zwischen Atom und Atomkern an.}}
+\cardrow
+{\frontcard{34}{Chemie}{Beschreibe den Aufbau eines Atoms. Gib auch an, ob die Bausteine des Atoms geladen sind.}}
+{\frontcard{35}{Chemie}{Was versteht man unter einem Orbital?}}
+\cardrow
+{\frontcard{36}{Chemie}{Was versteht man unter der Ordnungszahl Z?}}
+{\frontcard{37}{Chemie}{Was versteht man unter der Massenzahl A?}}
+\cardrow
+{\frontcard{38}{Chemie}{Was versteht man unter einem Isotop?}}
+{\frontcard{39}{Chemie}{Was ist ein Ion?}}
+\newpage
+\cardrow
+{\backcard{31}{Chemie}{Elektronen bewegen sich auf bestimmten erlaubten Schalen mit festgelegten Energien. Schalenwechsel sind mit Energieaufnahme oder -abgabe verbunden.}}
+{\backcard{30}{Chemie}{Das Atom besitzt einen kleinen, positiv geladenen, massereichen Kern und eine große Elektronenhülle. Der größte Teil ist leerer Raum.}}
+\cardrow
+{\backcard{33}{Chemie}{Atomdurchmesser etwa \(10^{-10}\,\mathrm m\), Kerndurchmesser etwa \(10^{-15}\,\mathrm m\); Verhältnis ungefähr \(10^5:1\).}}
+{\backcard{32}{Chemie}{Elektronen besitzen keine festen Bahnen. Wellenfunktionen beschreiben ihre Zustände; Orbitale geben Aufenthaltswahrscheinlichkeiten an.}}
+\cardrow
+{\backcard{35}{Chemie}{Ein Orbital ist ein durch eine Wellenfunktion beschriebener Raumbereich hoher Aufenthaltswahrscheinlichkeit. Es fasst höchstens zwei Elektronen.}}
+{\backcard{34}{Chemie}{Der Kern enthält positive Protonen und ungeladene Neutronen, die Hülle negative Elektronen. Im neutralen Atom sind Protonen- und Elektronenzahl gleich.}}
+\cardrow
+{\backcard{37}{Chemie}{Die Massenzahl \(A\) ist die Summe aus Protonen und Neutronen: \(A=Z+N\).}}
+{\backcard{36}{Chemie}{Die Ordnungszahl \(Z\) ist die Protonenzahl; beim neutralen Atom auch die Elektronenzahl.}}
+\cardrow
+{\backcard{39}{Chemie}{Ein Ion ist ein elektrisch geladenes Atom oder Molekül, entstanden durch Aufnahme oder Abgabe von Elektronen.}}
+{\backcard{38}{Chemie}{Isotope sind Atome desselben Elements mit gleicher Protonenzahl, aber unterschiedlicher Neutronen- und Massenzahl.}}
+\newpage
+\cardrow
+{\frontcard{40}{Chemie}{Wovon hängen die chemischen Eigenschaften eines Elements ab?}}
+{\frontcard{41}{Chemie}{Ist ein Atom oder Molekül elektrisch geladen?}}
+\cardrow
+{\frontcard{42}{Chemie}{Was sind Anionen und Kationen?}}
+{\frontcard{43}{Chemie}{Was sind Van-der-Waals-Kräfte?}}
+\cardrow
+{\frontcard{44}{Chemie}{Was sind Wasserstoffbrücken?}}
+{\frontcard{45}{Chemie}{Was sind Dipol-Dipol-Wechselwirkungen?}}
+\cardrow
+{\frontcard{46}{Chemie}{Welche Arten von chemischen Bindungen gibt es?}}
+{\frontcard{47}{Chemie}{Was versteht man unter der Edelgaskonfiguration bzw. Oktettregel?}}
+\cardrow
+{\frontcard{48}{Chemie}{Beschreibe die kovalente Bindung.}}
+{\frontcard{49}{Chemie}{Wann entstehen bei der kovalenten Bindung Mehrfachbindungen?}}
+\newpage
+\cardrow
+{\backcard{41}{Chemie}{Normalerweise ist es neutral. Durch Elektronenaufnahme oder -abgabe entsteht ein geladenes Ion.}}
+{\backcard{40}{Chemie}{Vor allem von Zahl und Anordnung der Valenzelektronen.}}
+\cardrow
+{\backcard{43}{Chemie}{Schwache Anziehungskräfte durch momentane und induzierte Dipole; sie wirken zwischen allen Atomen und Molekülen.}}
+{\backcard{42}{Chemie}{Anionen sind negativ geladene Ionen durch Elektronenaufnahme; Kationen positiv geladene Ionen durch Elektronenabgabe.}}
+\cardrow
+{\backcard{45}{Chemie}{Anziehungskräfte zwischen permanenten Dipolen: positive und negative Teilbereiche verschiedener Moleküle ziehen einander an.}}
+{\backcard{44}{Chemie}{Relativ starke Anziehungen zwischen an F, O oder N gebundenem Wasserstoff und einem freien Elektronenpaar an F, O oder N.}}
+\cardrow
+{\backcard{47}{Chemie}{Atome streben eine voll besetzte Außenschale an, meist acht Valenzelektronen; in der ersten Schale zwei.}}
+{\backcard{46}{Chemie}{Kovalente Bindung, Ionenbindung und Metallbindung.}}
+\cardrow
+{\backcard{49}{Chemie}{Wenn zwei Atome zwei oder drei Elektronenpaare gemeinsam nutzen; es entstehen Doppel- oder Dreifachbindungen.}}
+{\backcard{48}{Chemie}{Atome teilen ein oder mehrere Elektronenpaare. Die gemeinsamen Elektronen halten die Kerne zusammen.}}
+\newpage
+\cardrow
+{\frontcard{50}{Chemie}{Was versteht man unter einer polaren Bindung?}}
+{\frontcard{51}{Chemie}{Beschreibe die Ionenbindung.}}
+\cardrow
+{\frontcard{52}{Chemie}{Beschreibe die Metallbindung.}}
+{\frontcard{53}{Chemie}{Gib die drei Arten zwischenmolekularer Wechselwirkungen an.}}
+\cardrow
+{\frontcard{54}{Chemie}{Wonach werden im Periodensystem die Elemente geordnet?}}
+{\frontcard{55}{Chemie}{Wie ist das Periodensystem aufgebaut?}}
+\cardrow
+{\frontcard{56}{Chemie}{Was ist die Edelgaskonfiguration?}}
+{\frontcard{57}{Chemie}{Was versteht man unter Elektronegativität?}}
+\cardrow
+{\frontcard{58}{Chemie}{Gib die fünf elektronegativsten Elemente an.}}
+{\frontcard{59}{Chemie}{Warum ist die Elektronegativität so wichtig?}}
+\newpage
+\cardrow
+{\backcard{51}{Chemie}{Nach Elektronenübertragung ziehen sich Kationen und Anionen elektrostatisch an und bilden ein Ionengitter.}}
+{\backcard{50}{Chemie}{Eine kovalente Bindung mit ungleich verteilten Bindungselektronen und den Teilladungen \(\delta^+\) und \(\delta^-\).}}
+\cardrow
+{\backcard{53}{Chemie}{Van-der-Waals-Kräfte, Dipol-Dipol-Wechselwirkungen und Wasserstoffbrücken.}}
+{\backcard{52}{Chemie}{Positive Atomrümpfe im Gitter werden von frei beweglichen, delokalisierten Valenzelektronen zusammengehalten.}}
+\cardrow
+{\backcard{55}{Chemie}{Waagrechte Zeilen sind Perioden, senkrechte Spalten Gruppen. Elemente einer Gruppe zeigen ähnliche Eigenschaften.}}
+{\backcard{54}{Chemie}{Nach steigender Ordnungszahl, also Protonenzahl.}}
+\cardrow
+{\backcard{57}{Chemie}{Ein Maß dafür, wie stark ein Atom in einer Bindung die gemeinsamen Elektronen anzieht.}}
+{\backcard{56}{Chemie}{Eine vollständig besetzte, besonders stabile Außenschale; meist acht Valenzelektronen, bei Helium zwei.}}
+\cardrow
+{\backcard{59}{Chemie}{Die Elektronegativitätsdifferenz hilft, Bindungspolarität, Teilladungen und Bindungscharakter abzuschätzen.}}
+{\backcard{58}{Chemie}{Fluor, Sauerstoff, Chlor, Stickstoff und Brom.}}
+\newpage
+\cardrow
+{\frontcard{60}{Chemie}{Was ist für einen Reinstoff charakteristisch?}}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\newpage
+\cardrow
+{\blankcard}
+{\backcard{60}{Chemie}{Ein Reinstoff besteht aus nur einer Teilchenart und besitzt charakteristische Stoffeigenschaften wie Dichte, Schmelz- und Siedetemperatur.}}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\end{document}

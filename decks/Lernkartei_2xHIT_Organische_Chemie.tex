@@ -1,0 +1,105 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\geometry{paper=a4paper,top=0cm,bottom=0cm,left=0cm,right=0cm,headheight=0pt,headsep=0pt,footskip=0pt}
+\pagestyle{empty}
+\definecolor{examblue}{RGB}{0,70,130}
+\definecolor{examgreen}{RGB}{0,110,60}
+\definecolor{cardgray}{RGB}{248,248,248}
+\newlength{\cardw}\newlength{\cardh}
+\setlength{\cardw}{9.80cm}\setlength{\cardh}{5.24cm}
+\AddToShipoutPictureFG{\begin{tikzpicture}[remember picture,overlay]
+\draw[gray!70,densely dotted,line width=0.7pt]([xshift=10.5cm]current page.south west)--([xshift=10.5cm]current page.north west);
+\foreach \y in {5.94,11.88,17.82,23.76}{\draw[gray!70,densely dotted,line width=0.7pt]([yshift=\y cm]current page.south west)--([yshift=\y cm]current page.south east);}
+\end{tikzpicture}}
+\newcommand{\checkfeld}{\raisebox{-0.15ex}{\fbox{\rule{0pt}{1.15ex}\rule{1.15ex}{0pt}}}}
+\newcommand{\frontcard}[3]{\begin{tikzpicture}
+\node[draw=examblue,line width=0.8pt,rounded corners=4pt,fill=white,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=8pt](card){\Large\bfseries #3};
+\node[anchor=north west,fill=examblue,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examblue,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examblue,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\backcard}[3]{\begin{tikzpicture}
+\node[draw=examgreen,line width=0.8pt,rounded corners=4pt,fill=cardgray,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=9pt](card){\large #3};
+\node[anchor=north west,fill=examgreen,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examgreen,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examgreen,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\blankcard}{\begin{tikzpicture}\node[minimum width=\cardw,minimum height=\cardh]{};\end{tikzpicture}}
+\newcommand{\cardcell}[1]{\parbox[c][5.94cm][c]{10.50cm}{\centering #1}}
+\newcommand{\cardrow}[2]{\noindent\cardcell{#1}\cardcell{#2}\par}
+\begin{document}
+\setlength{\topskip}{0pt}
+\offinterlineskip
+% Karten 120 bis 131: Vorder- und Rueckseiten
+\cardrow
+{\frontcard{120}{Organische Chemie}{Nenne die allgemeine Summenformel eines Alkans.}}
+{\frontcard{121}{Organische Chemie}{Nenne die allgemeine Summenformel eines Alkens mit einer Doppelbindung.}}
+\cardrow
+{\frontcard{122}{Organische Chemie}{Nenne die allgemeine Summenformel eines Alkins mit einer Dreifachbindung.}}
+{\frontcard{123}{Organische Chemie}{Wie lautet die homologe Reihe der Alkane von C1 bis C10?}}
+\cardrow
+{\frontcard{124}{Organische Chemie}{Nenne drei wichtige Fakten zu ungesättigten Kohlenwasserstoffen.}}
+{\frontcard{125}{Organische Chemie}{Nenne drei wichtige Fakten zu gesättigten Kohlenwasserstoffen.}}
+\cardrow
+{\frontcard{126}{Organische Chemie}{Beschreibe die Stoffklasse der Arene kurz.}}
+{\frontcard{127}{Organische Chemie}{Was sind Strukturisomere?}}
+\cardrow
+{\frontcard{128}{Organische Chemie}{Nenne die Schritte zur Benennung aliphatischer Kohlenwasserstoffe.}}
+{\frontcard{129}{Organische Chemie}{Fasse Struktur, Benennung, Beispiel und Wasserlöslichkeit der Hydroxygruppe kurz zusammen.}}
+\newpage
+\cardrow
+{\backcard{121}{Organische Chemie}{Für offenkettige Alkene mit einer Doppelbindung: \(\mathrm{C_nH_{2n}}\).}}
+{\backcard{120}{Organische Chemie}{Für offenkettige Alkane: \(\mathrm{C_nH_{2n+2}}\).}}
+\cardrow
+{\backcard{123}{Organische Chemie}{Methan, Ethan, Propan, Butan, Pentan, Hexan, Heptan, Octan, Nonan und Decan.}}
+{\backcard{122}{Organische Chemie}{Für offenkettige Alkine mit einer Dreifachbindung: \(\mathrm{C_nH_{2n-2}}\).}}
+\cardrow
+{\backcard{125}{Organische Chemie}{Nur C--C-Einfachbindungen; offenkettig \(\mathrm{C_nH_{2n+2}}\); relativ reaktionsträge und häufig Substitution.}}
+{\backcard{124}{Organische Chemie}{Mindestens eine Doppel- oder Dreifachbindung; reaktiver als Alkane; häufig Additionsreaktionen.}}
+\cardrow
+{\backcard{127}{Organische Chemie}{Gleiche Summenformel, aber unterschiedliche Verknüpfung der Atome und daher oft unterschiedliche Eigenschaften.}}
+{\backcard{126}{Organische Chemie}{Arene sind aromatische Kohlenwasserstoffe mit delokalisiertem Ringsystem, meist Benzolring; sie reagieren oft durch elektrophile Substitution.}}
+\cardrow
+{\backcard{129}{Organische Chemie}{\(-\mathrm{OH}\); Alkohole, Endung -ol, Beispiel Ethanol. Kurzkettige Alkohole sind gut wasserlöslich.}}
+{\backcard{128}{Organische Chemie}{Längste Kette wählen, günstig nummerieren, Seitenketten benennen und ordnen, Positionen angeben, Stammname und Endung bilden.}}
+\newpage
+\cardrow
+{\frontcard{130}{Organische Chemie}{Fasse Struktur, Benennung, Beispiel und Wasserlöslichkeit der Carbonylgruppe kurz zusammen.}}
+{\frontcard{131}{Organische Chemie}{Fasse Struktur, Benennung, Beispiel und Wasserlöslichkeit der Carboxygruppe kurz zusammen.}}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\newpage
+\cardrow
+{\backcard{131}{Organische Chemie}{\(-\mathrm{COOH}\); Carbonsäuren, Endung -säure, Beispiel Ethansäure. Kurzkettige Vertreter sind gut wasserlöslich.}}
+{\backcard{130}{Organische Chemie}{\(\mathrm{C=O}\); Aldehyde enden auf -al, Ketone auf -on. Kleine Vertreter sind gut wasserlöslich.}}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\end{document}

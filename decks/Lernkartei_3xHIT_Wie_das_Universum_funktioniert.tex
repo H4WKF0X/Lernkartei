@@ -1,0 +1,105 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\geometry{paper=a4paper,top=0cm,bottom=0cm,left=0cm,right=0cm,headheight=0pt,headsep=0pt,footskip=0pt}
+\pagestyle{empty}
+\definecolor{examblue}{RGB}{0,70,130}
+\definecolor{examgreen}{RGB}{0,110,60}
+\definecolor{cardgray}{RGB}{248,248,248}
+\newlength{\cardw}\newlength{\cardh}
+\setlength{\cardw}{9.80cm}\setlength{\cardh}{5.24cm}
+\AddToShipoutPictureFG{\begin{tikzpicture}[remember picture,overlay]
+\draw[gray!70,densely dotted,line width=0.7pt]([xshift=10.5cm]current page.south west)--([xshift=10.5cm]current page.north west);
+\foreach \y in {5.94,11.88,17.82,23.76}{\draw[gray!70,densely dotted,line width=0.7pt]([yshift=\y cm]current page.south west)--([yshift=\y cm]current page.south east);}
+\end{tikzpicture}}
+\newcommand{\checkfeld}{\raisebox{-0.15ex}{\fbox{\rule{0pt}{1.15ex}\rule{1.15ex}{0pt}}}}
+\newcommand{\frontcard}[3]{\begin{tikzpicture}
+\node[draw=examblue,line width=0.8pt,rounded corners=4pt,fill=white,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=8pt](card){\Large\bfseries #3};
+\node[anchor=north west,fill=examblue,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examblue,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examblue,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\backcard}[3]{\begin{tikzpicture}
+\node[draw=examgreen,line width=0.8pt,rounded corners=4pt,fill=cardgray,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=9pt](card){\large #3};
+\node[anchor=north west,fill=examgreen,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examgreen,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examgreen,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\blankcard}{\begin{tikzpicture}\node[minimum width=\cardw,minimum height=\cardh]{};\end{tikzpicture}}
+\newcommand{\cardcell}[1]{\parbox[c][5.94cm][c]{10.50cm}{\centering #1}}
+\newcommand{\cardrow}[2]{\noindent\cardcell{#1}\cardcell{#2}\par}
+\begin{document}
+\setlength{\topskip}{0pt}
+\offinterlineskip
+% Karten 160 bis 175: Vorder- und Rueckseiten
+\cardrow
+{\frontcard{160}{Wie das Universum funktioniert}{Was ist der Impuls? Definiere die physikalische Größe mit Formel und Einheit.}}
+{\frontcard{161}{Wie das Universum funktioniert}{Nenne die drei Newtonschen Gesetze.}}
+\cardrow
+{\frontcard{162}{Wie das Universum funktioniert}{Erläutere das Trägheitsgesetz.}}
+{\frontcard{163}{Wie das Universum funktioniert}{Erläutere das dynamische Grundgesetz.}}
+\cardrow
+{\frontcard{164}{Wie das Universum funktioniert}{Erläutere das Wechselwirkungsgesetz.}}
+{\frontcard{165}{Wie das Universum funktioniert}{Wie lautet der Impulserhaltungssatz?}}
+\cardrow
+{\frontcard{166}{Wie das Universum funktioniert}{Wie lautet der Drehimpulserhaltungssatz?}}
+{\frontcard{167}{Wie das Universum funktioniert}{Wie lautet der Energieerhaltungssatz?}}
+\cardrow
+{\frontcard{168}{Wie das Universum funktioniert}{Definiere Temperatur.}}
+{\frontcard{169}{Wie das Universum funktioniert}{Definiere Wärmeenergie.}}
+\newpage
+\cardrow
+{\backcard{161}{Wie das Universum funktioniert}{Trägheitsgesetz, dynamisches Grundgesetz und Wechselwirkungsgesetz.}}
+{\backcard{160}{Wie das Universum funktioniert}{\(\vec p=m\vec v\); SI-Einheit \(\mathrm{kg\,m/s}=\mathrm{N\,s}\).}}
+\cardrow
+{\backcard{163}{Wie das Universum funktioniert}{\(\vec F=m\vec a\); eine Kraft verändert den Bewegungszustand.}}
+{\backcard{162}{Wie das Universum funktioniert}{Ohne resultierende Kraft bleibt ein Körper in Ruhe oder bewegt sich geradlinig gleichförmig.}}
+\cardrow
+{\backcard{165}{Wie das Universum funktioniert}{In einem abgeschlossenen System bleibt ohne äußere Kraft der Gesamtimpuls konstant.}}
+{\backcard{164}{Wie das Universum funktioniert}{Kräfte treten paarweise, gleich groß und entgegengesetzt gerichtet auf.}}
+\cardrow
+{\backcard{167}{Wie das Universum funktioniert}{In einem abgeschlossenen System bleibt die Gesamtenergie konstant; sie wird nur übertragen oder umgewandelt.}}
+{\backcard{166}{Wie das Universum funktioniert}{Ohne äußeres Drehmoment bleibt der Gesamtdrehimpuls konstant.}}
+\cardrow
+{\backcard{169}{Wie das Universum funktioniert}{Energieübertragung aufgrund eines Temperaturunterschieds vom wärmeren zum kälteren Körper; Einheit Joule.}}
+{\backcard{168}{Wie das Universum funktioniert}{Maß für den thermischen Zustand und die mittlere ungeordnete Bewegungsenergie; SI-Einheit Kelvin.}}
+\newpage
+\cardrow
+{\frontcard{170}{Wie das Universum funktioniert}{Fasse das allgemeine Gravitationsgesetz in Worten zusammen.}}
+{\frontcard{171}{Wie das Universum funktioniert}{Gib die Formel des Newtonschen Gravitationsgesetzes an.}}
+\cardrow
+{\frontcard{172}{Wie das Universum funktioniert}{Was versteht man unter der Fluchtgeschwindigkeit?}}
+{\frontcard{173}{Wie das Universum funktioniert}{Definiere kinetische Energie und gib ein Beispiel an.}}
+\cardrow
+{\frontcard{174}{Wie das Universum funktioniert}{Definiere potentielle Energie und gib ein Beispiel an.}}
+{\frontcard{175}{Wie das Universum funktioniert}{Definiere Strahlungsenergie und gib ein Beispiel an.}}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\newpage
+\cardrow
+{\backcard{171}{Wie das Universum funktioniert}{\(F_G=Gm_1m_2/r^2\).}}
+{\backcard{170}{Wie das Universum funktioniert}{Zwei Massen ziehen einander an; die Kraft ist proportional zu beiden Massen und umgekehrt proportional zum Quadrat des Abstands.}}
+\cardrow
+{\backcard{173}{Wie das Universum funktioniert}{Bewegungsenergie: \(E_\mathrm{kin}=\frac12mv^2\), etwa ein fahrendes Fahrzeug.}}
+{\backcard{172}{Wie das Universum funktioniert}{Kleinste Anfangsgeschwindigkeit zum dauerhaften Verlassen eines Gravitationsfeldes: \(v_F=\sqrt{2GM/r}\).}}
+\cardrow
+{\backcard{175}{Wie das Universum funktioniert}{Energie elektromagnetischer Strahlung, etwa Sonnenlicht, das eine Solarzelle versorgt.}}
+{\backcard{174}{Wie das Universum funktioniert}{Lageenergie: nahe der Erde \(E_\mathrm{pot}=mgh\), etwa ein angehobener Körper.}}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\end{document}

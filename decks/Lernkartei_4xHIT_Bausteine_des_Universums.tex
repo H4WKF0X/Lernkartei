@@ -1,0 +1,105 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\geometry{paper=a4paper,top=0cm,bottom=0cm,left=0cm,right=0cm,headheight=0pt,headsep=0pt,footskip=0pt}
+\pagestyle{empty}
+\definecolor{examblue}{RGB}{0,70,130}
+\definecolor{examgreen}{RGB}{0,110,60}
+\definecolor{cardgray}{RGB}{248,248,248}
+\newlength{\cardw}\newlength{\cardh}
+\setlength{\cardw}{9.80cm}\setlength{\cardh}{5.24cm}
+\AddToShipoutPictureFG{\begin{tikzpicture}[remember picture,overlay]
+\draw[gray!70,densely dotted,line width=0.7pt]([xshift=10.5cm]current page.south west)--([xshift=10.5cm]current page.north west);
+\foreach \y in {5.94,11.88,17.82,23.76}{\draw[gray!70,densely dotted,line width=0.7pt]([yshift=\y cm]current page.south west)--([yshift=\y cm]current page.south east);}
+\end{tikzpicture}}
+\newcommand{\checkfeld}{\raisebox{-0.15ex}{\fbox{\rule{0pt}{1.15ex}\rule{1.15ex}{0pt}}}}
+\newcommand{\frontcard}[3]{\begin{tikzpicture}
+\node[draw=examblue,line width=0.8pt,rounded corners=4pt,fill=white,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=8pt](card){\Large\bfseries #3};
+\node[anchor=north west,fill=examblue,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examblue,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examblue,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\backcard}[3]{\begin{tikzpicture}
+\node[draw=examgreen,line width=0.8pt,rounded corners=4pt,fill=cardgray,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=9pt](card){\large #3};
+\node[anchor=north west,fill=examgreen,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examgreen,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examgreen,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\blankcard}{\begin{tikzpicture}\node[minimum width=\cardw,minimum height=\cardh]{};\end{tikzpicture}}
+\newcommand{\cardcell}[1]{\parbox[c][5.94cm][c]{10.50cm}{\centering #1}}
+\newcommand{\cardrow}[2]{\noindent\cardcell{#1}\cardcell{#2}\par}
+\begin{document}
+\setlength{\topskip}{0pt}
+\offinterlineskip
+% Karten 176 bis 187: Vorder- und Rueckseiten
+\cardrow
+{\frontcard{176}{Bausteine des Universums}{Nenne drei wichtige Erkenntnisse, die auf den Gesetzen der Quantenmechanik beruhen.}}
+{\frontcard{177}{Bausteine des Universums}{Welche grundlegenden Eigenschaften haben subatomare Teilchen?}}
+\cardrow
+{\frontcard{178}{Bausteine des Universums}{Beschreibe die Teilchen im Standardmodell.}}
+{\frontcard{179}{Bausteine des Universums}{Was ist Antimaterie?}}
+\cardrow
+{\frontcard{180}{Bausteine des Universums}{Wodurch unterscheiden sich Teilchen und Antiteilchen, worin nicht?}}
+{\frontcard{181}{Bausteine des Universums}{Nenne die vier fundamentalen Naturkräfte.}}
+\cardrow
+{\frontcard{182}{Bausteine des Universums}{Beschreibe die relative Stärke der vier fundamentalen Kräfte.}}
+{\frontcard{183}{Bausteine des Universums}{Was ist die Unschärferelation?}}
+\cardrow
+{\frontcard{184}{Bausteine des Universums}{Beschreibe die Ort-Impuls-Unschärfe.}}
+{\frontcard{185}{Bausteine des Universums}{Beschreibe die Energie-Zeit-Unschärferelation.}}
+\newpage
+\cardrow
+{\backcard{177}{Bausteine des Universums}{Masse beziehungsweise Energie, Ladung, Spin und weitere Quantenzahlen; außerdem Wellen- und Teilcheneigenschaften.}}
+{\backcard{176}{Bausteine des Universums}{Energie ist quantisiert; Quantenobjekte zeigen Wellen- und Teilcheneigenschaften; Ergebnisse sind probabilistisch und unterliegen Unschärfen.}}
+\cardrow
+{\backcard{179}{Bausteine des Universums}{Antimaterie besteht aus Antiteilchen. Bei Annihilation wird Energie in andere Teilchen, häufig Photonen, umgewandelt.}}
+{\backcard{178}{Bausteine des Universums}{Sechs Quarks und sechs Leptonen als Fermionen; Photon, Gluonen, W- und Z-Bosonen als Vermittler; außerdem Higgs-Boson. Gravitation fehlt.}}
+\cardrow
+{\backcard{181}{Bausteine des Universums}{Starke, elektromagnetische, schwache Wechselwirkung und Gravitation.}}
+{\backcard{180}{Bausteine des Universums}{Gleiche Masse und gleicher Spin, aber entgegengesetzte Ladung und additive Quantenzahlen.}}
+\cardrow
+{\backcard{183}{Bausteine des Universums}{Bestimmte Größenpaare können nicht gleichzeitig beliebig genau bestimmt werden.}}
+{\backcard{182}{Bausteine des Universums}{Bezogen auf stark \(\approx1\): elektromagnetisch \(\approx10^{-2}\), schwach \(\approx10^{-13}\), Gravitation \(\approx10^{-38}\).}}
+\cardrow
+{\backcard{185}{Bausteine des Universums}{Näherungsweise \(\Delta E\,\Delta t\gtrsim\hbar/2\); kurzlebige Zustände haben größere Energiebreite.}}
+{\backcard{184}{Bausteine des Universums}{\(\Delta x\,\Delta p\ge\hbar/2\).}}
+\newpage
+\cardrow
+{\frontcard{186}{Bausteine des Universums}{Was besagt das Ausschlussprinzip, auch Pauli-Prinzip genannt?}}
+{\frontcard{187}{Bausteine des Universums}{Erläutere den Tunneleffekt.}}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\newpage
+\cardrow
+{\backcard{187}{Bausteine des Universums}{Ein Quantenobjekt kann mit endlicher Wahrscheinlichkeit eine klassisch unüberwindbare Potentialbarriere durchdringen.}}
+{\backcard{186}{Bausteine des Universums}{Zwei identische Fermionen können nicht denselben Quantenzustand einnehmen; pro Orbital höchstens zwei Elektronen mit entgegengesetztem Spin.}}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\end{document}

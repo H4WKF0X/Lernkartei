@@ -205,6 +205,20 @@ function toCardMap(entries, command, topics, warnings) {
 }
 
 /**
+ * Macht aus einem LaTeX-Text einen lesbaren Text.
+ *
+ * LaTeX schützt die Zeichen & % $ # _ { } mit einem Backslash. Für die
+ * Anzeige muss der Backslash weg. Nur der Deck-Titel läuft durch diese
+ * Funktion. Der Kartentext bleibt roh, ihn rendert KaTeX.
+ *
+ * @param {string} value Text aus einer Deck-Datei.
+ * @returns {string} Text ohne die schützenden Backslashes.
+ */
+function unescapeLatexText(value) {
+  return value.replace(/\\([&%$#_{}])/g, '$1');
+}
+
+/**
  * Sucht das häufigste Thema aller Karten.
  *
  * @param {string[]} topics Themen aller gefundenen Kommandos.
@@ -282,7 +296,7 @@ export function parseDeck(source, fileName) {
 
   return {
     id: slugFromFileName(fileName),
-    title: mostCommonTopic(topics),
+    title: unescapeLatexText(mostCommonTopic(topics)),
     cards,
     warnings,
   };

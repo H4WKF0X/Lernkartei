@@ -1,0 +1,105 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\geometry{paper=a4paper,top=0cm,bottom=0cm,left=0cm,right=0cm,headheight=0pt,headsep=0pt,footskip=0pt}
+\pagestyle{empty}
+\definecolor{examblue}{RGB}{0,70,130}
+\definecolor{examgreen}{RGB}{0,110,60}
+\definecolor{cardgray}{RGB}{248,248,248}
+\newlength{\cardw}\newlength{\cardh}
+\setlength{\cardw}{9.80cm}\setlength{\cardh}{5.24cm}
+\AddToShipoutPictureFG{\begin{tikzpicture}[remember picture,overlay]
+\draw[gray!70,densely dotted,line width=0.7pt]([xshift=10.5cm]current page.south west)--([xshift=10.5cm]current page.north west);
+\foreach \y in {5.94,11.88,17.82,23.76}{\draw[gray!70,densely dotted,line width=0.7pt]([yshift=\y cm]current page.south west)--([yshift=\y cm]current page.south east);}
+\end{tikzpicture}}
+\newcommand{\checkfeld}{\raisebox{-0.15ex}{\fbox{\rule{0pt}{1.15ex}\rule{1.15ex}{0pt}}}}
+\newcommand{\frontcard}[3]{\begin{tikzpicture}
+\node[draw=examblue,line width=0.8pt,rounded corners=4pt,fill=white,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=8pt](card){\Large\bfseries #3};
+\node[anchor=north west,fill=examblue,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examblue,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examblue,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\backcard}[3]{\begin{tikzpicture}
+\node[draw=examgreen,line width=0.8pt,rounded corners=4pt,fill=cardgray,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=9pt](card){\large #3};
+\node[anchor=north west,fill=examgreen,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examgreen,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examgreen,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\blankcard}{\begin{tikzpicture}\node[minimum width=\cardw,minimum height=\cardh]{};\end{tikzpicture}}
+\newcommand{\cardcell}[1]{\parbox[c][5.94cm][c]{10.50cm}{\centering #1}}
+\newcommand{\cardrow}[2]{\noindent\cardcell{#1}\cardcell{#2}\par}
+\begin{document}
+\setlength{\topskip}{0pt}
+\offinterlineskip
+% Karten 132 bis 148: Vorder- und Rueckseiten
+\cardrow
+{\frontcard{132}{Licht und Materie}{Benenne die vier wesentlichen Wechselwirkungen zwischen Materie und Licht.}}
+{\frontcard{133}{Licht und Materie}{Beschreibe die Wechselwirkung von Licht und Materie: Emission.}}
+\cardrow
+{\frontcard{134}{Licht und Materie}{Beschreibe die Wechselwirkung von Licht und Materie: Absorption.}}
+{\frontcard{135}{Licht und Materie}{Beschreibe die Wechselwirkung von Licht und Materie: Reflexion bzw. Streuung.}}
+\cardrow
+{\frontcard{136}{Licht und Materie}{Beschreibe die Wechselwirkung von Licht und Materie: Transmission.}}
+{\frontcard{137}{Licht und Materie}{Was ist ein Photon?}}
+\cardrow
+{\frontcard{138}{Licht und Materie}{Benenne die vier Aggregatzustände.}}
+{\frontcard{139}{Licht und Materie}{Was ist ein Plasma?}}
+\cardrow
+{\frontcard{140}{Licht und Materie}{Wie nennt man den Übergang zwischen den Aggregatzuständen fest und flüssig?}}
+{\frontcard{141}{Licht und Materie}{Wie nennt man den Übergang zwischen den Aggregatzuständen gasförmig und flüssig?}}
+\newpage
+\cardrow
+{\backcard{133}{Licht und Materie}{Materie gibt Energie als Photonen ab, etwa beim Übergang eines Elektrons in einen energieärmeren Zustand.}}
+{\backcard{132}{Licht und Materie}{Emission, Absorption, Reflexion beziehungsweise Streuung und Transmission.}}
+\cardrow
+{\backcard{135}{Licht und Materie}{Reflexion ist gerichtetes Zurückwerfen; Streuung ist Ablenkung in verschiedene Richtungen.}}
+{\backcard{134}{Licht und Materie}{Materie nimmt Lichtenergie auf, etwa wenn ein Elektron in einen energiereicheren Zustand wechselt.}}
+\cardrow
+{\backcard{137}{Licht und Materie}{Ein Lichtquant, also ein Energiepaket elektromagnetischer Strahlung mit \(E=hf\) und ohne Ruhemasse.}}
+{\backcard{136}{Licht und Materie}{Licht durchdringt einen Stoff vollständig oder teilweise; Richtung, Geschwindigkeit und Intensität können sich ändern.}}
+\cardrow
+{\backcard{139}{Licht und Materie}{Ein ionisiertes Gas mit frei beweglichen Elektronen und Ionen.}}
+{\backcard{138}{Licht und Materie}{Fest, flüssig, gasförmig und Plasma.}}
+\cardrow
+{\backcard{141}{Licht und Materie}{Flüssig zu gasförmig: Verdampfen; gasförmig zu flüssig: Kondensieren.}}
+{\backcard{140}{Licht und Materie}{Fest zu flüssig: Schmelzen; flüssig zu fest: Erstarren beziehungsweise Gefrieren.}}
+\newpage
+\cardrow
+{\frontcard{142}{Licht und Materie}{Wie nennt man den Übergang zwischen den Aggregatzuständen fest und gasförmig?}}
+{\frontcard{143}{Licht und Materie}{Wie nennt man den Übergang zwischen den Aggregatzuständen gasförmig und Plasma?}}
+\cardrow
+{\frontcard{144}{Licht und Materie}{Was versteht man unter einem kontinuierlichen Spektrum?}}
+{\frontcard{145}{Licht und Materie}{Was versteht man unter einem Emissionslinienspektrum?}}
+\cardrow
+{\frontcard{146}{Licht und Materie}{Was versteht man unter einem Absorptionslinienspektrum?}}
+{\frontcard{147}{Licht und Materie}{Beschreibe das thermische Strahlungsspektrum.}}
+\cardrow
+{\frontcard{148}{Licht und Materie}{Beschreibe den Doppler-Effekt des Lichts.}}
+{\blankcard}
+\cardrow
+{\blankcard}
+{\blankcard}
+\newpage
+\cardrow
+{\backcard{143}{Licht und Materie}{Gas zu Plasma: Ionisation; Plasma zu Gas: Rekombination beziehungsweise Deionisation.}}
+{\backcard{142}{Licht und Materie}{Fest zu gasförmig: Sublimieren; gasförmig zu fest: Resublimieren.}}
+\cardrow
+{\backcard{145}{Licht und Materie}{Einzelne helle Linien bei charakteristischen Wellenlängen angeregter Atome oder Ionen.}}
+{\backcard{144}{Licht und Materie}{Es enthält alle Wellenlängen eines Bereichs ohne Lücken.}}
+\cardrow
+{\backcard{147}{Licht und Materie}{Jeder Körper über 0 K strahlt. Mit steigender Temperatur wächst die Intensität und das Maximum wandert zu kürzeren Wellenlängen.}}
+{\backcard{146}{Licht und Materie}{Dunkle Linien in einem kontinuierlichen Spektrum durch Absorption charakteristischer Wellenlängen.}}
+\cardrow
+{\blankcard}
+{\backcard{148}{Licht und Materie}{Annäherung führt zur Blauverschiebung, Entfernung zur Rotverschiebung.}}
+\cardrow
+{\blankcard}
+{\blankcard}
+\end{document}

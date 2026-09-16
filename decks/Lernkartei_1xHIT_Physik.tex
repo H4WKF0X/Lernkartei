@@ -1,0 +1,137 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\geometry{paper=a4paper,top=0cm,bottom=0cm,left=0cm,right=0cm,headheight=0pt,headsep=0pt,footskip=0pt}
+\pagestyle{empty}
+\definecolor{examblue}{RGB}{0,70,130}
+\definecolor{examgreen}{RGB}{0,110,60}
+\definecolor{cardgray}{RGB}{248,248,248}
+\newlength{\cardw}\newlength{\cardh}
+\setlength{\cardw}{9.80cm}\setlength{\cardh}{5.24cm}
+\AddToShipoutPictureFG{\begin{tikzpicture}[remember picture,overlay]
+\draw[gray!70,densely dotted,line width=0.7pt]([xshift=10.5cm]current page.south west)--([xshift=10.5cm]current page.north west);
+\foreach \y in {5.94,11.88,17.82,23.76}{\draw[gray!70,densely dotted,line width=0.7pt]([yshift=\y cm]current page.south west)--([yshift=\y cm]current page.south east);}
+\end{tikzpicture}}
+\newcommand{\checkfeld}{\raisebox{-0.15ex}{\fbox{\rule{0pt}{1.15ex}\rule{1.15ex}{0pt}}}}
+\newcommand{\frontcard}[3]{\begin{tikzpicture}
+\node[draw=examblue,line width=0.8pt,rounded corners=4pt,fill=white,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=8pt](card){\Large\bfseries #3};
+\node[anchor=north west,fill=examblue,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examblue,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examblue,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\backcard}[3]{\begin{tikzpicture}
+\node[draw=examgreen,line width=0.8pt,rounded corners=4pt,fill=cardgray,minimum width=\cardw,minimum height=\cardh,text width=8.75cm,align=center,inner sep=9pt](card){\large #3};
+\node[anchor=north west,fill=examgreen,text=white,rounded corners=3pt,font=\bfseries\small,inner xsep=7pt,inner ysep=4pt]at([xshift=7pt,yshift=-7pt]card.north west){Karte #1};
+\node[anchor=south,text=examgreen,font=\scriptsize\bfseries]at([yshift=21pt]card.south){NaWi $\cdot$ #2};
+\node[anchor=south,text=examgreen,font=\scriptsize]at([yshift=6pt]card.south){Gewusst:\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld\enspace\checkfeld};
+\end{tikzpicture}}
+\newcommand{\blankcard}{\begin{tikzpicture}\node[minimum width=\cardw,minimum height=\cardh]{};\end{tikzpicture}}
+\newcommand{\cardcell}[1]{\parbox[c][5.94cm][c]{10.50cm}{\centering #1}}
+\newcommand{\cardrow}[2]{\noindent\cardcell{#1}\cardcell{#2}\par}
+\begin{document}
+\setlength{\topskip}{0pt}
+\offinterlineskip
+% Karten 61 bis 90: Vorder- und Rueckseiten
+\cardrow
+{\frontcard{61}{Physik}{Durch welche drei Größen wird eine Translation beschrieben?}}
+{\frontcard{62}{Physik}{Was versteht man in der Kinematik unter Weg bzw. Position s?}}
+\cardrow
+{\frontcard{63}{Physik}{Was versteht man in der Kinematik unter Geschwindigkeit v?}}
+{\frontcard{64}{Physik}{Was versteht man in der Kinematik unter Beschleunigung a?}}
+\cardrow
+{\frontcard{65}{Physik}{Wie lautet die Formel für die Geschwindigkeit? Gib auch die SI-Einheit an!}}
+{\frontcard{66}{Physik}{Wie lautet die Formel für die Beschleunigung? Gib auch die SI-Einheit an!}}
+\cardrow
+{\frontcard{67}{Physik}{Was versteht man unter Trägheit?}}
+{\frontcard{68}{Physik}{Wie lautet das erste Newtonsche Gesetz?}}
+\cardrow
+{\frontcard{69}{Physik}{Wie lautet das zweite Newtonsche Gesetz?}}
+{\frontcard{70}{Physik}{Wie lautet das dritte Newtonsche Gesetz?}}
+\newpage
+\cardrow
+{\backcard{62}{Physik}{Die Position \(s\) beschreibt den Ort relativ zu einem Bezugspunkt; \(\Delta s=s_2-s_1\). SI-Einheit: m.}}
+{\backcard{61}{Physik}{Durch Richtung, Sinn und Betrag des Verschiebungsvektors.}}
+\cardrow
+{\backcard{64}{Physik}{Beschleunigung beschreibt die Geschwindigkeitsänderung pro Zeit: \(a=\Delta v/\Delta t\).}}
+{\backcard{63}{Physik}{Geschwindigkeit beschreibt die Ortsänderung pro Zeit einschließlich Richtung: \(v=\Delta s/\Delta t\).}}
+\cardrow
+{\backcard{66}{Physik}{\(a=\Delta v/\Delta t\), SI-Einheit \(\mathrm{m/s^2}\).}}
+{\backcard{65}{Physik}{\(v=\Delta s/\Delta t\), SI-Einheit \(\mathrm{m/s}\).}}
+\cardrow
+{\backcard{68}{Physik}{Ein Körper bleibt in Ruhe oder geradlinig gleichförmiger Bewegung, solange keine resultierende Kraft wirkt.}}
+{\backcard{67}{Physik}{Trägheit ist der Widerstand eines Körpers gegen eine Änderung seines Bewegungszustands.}}
+\cardrow
+{\backcard{70}{Physik}{Kräfte treten paarweise auf: gleich groß, entgegengesetzt gerichtet und auf verschiedene Körper wirkend.}}
+{\backcard{69}{Physik}{Die resultierende Kraft lautet \(\vec F=m\vec a\).}}
+\newpage
+\cardrow
+{\frontcard{71}{Physik}{Wofür steht die Einheit N (Newton) in SI-Einheiten?}}
+{\frontcard{72}{Physik}{Wie lauten die drei Energieformen in der klassischen Mechanik?}}
+\cardrow
+{\frontcard{73}{Physik}{Gib die Formel für potentielle Energie an.}}
+{\frontcard{74}{Physik}{Gib die Formel für kinetische Energie an.}}
+\cardrow
+{\frontcard{75}{Physik}{Gib die Formel für Federenergie an.}}
+{\frontcard{76}{Physik}{Was versteht man unter Federenergie?}}
+\cardrow
+{\frontcard{77}{Physik}{Was versteht man unter kinetischer Energie?}}
+{\frontcard{78}{Physik}{Was versteht man unter potentieller Energie?}}
+\cardrow
+{\frontcard{79}{Physik}{Wie wird die in Ah oder mAh angegebene Ladungsmenge eines Akkus mithilfe der Spannung in Joule umgerechnet?}}
+{\frontcard{80}{Physik}{Mit welcher Formel wird die Gewichtskraft berechnet? Benenne Größen und SI-Einheiten!}}
+\newpage
+\cardrow
+{\backcard{72}{Physik}{Potentielle, kinetische und elastische beziehungsweise Federenergie.}}
+{\backcard{71}{Physik}{\(1\,\mathrm N=1\,\mathrm{kg\,m/s^2}\).}}
+\cardrow
+{\backcard{74}{Physik}{\(E_\mathrm{kin}=\frac12 mv^2\).}}
+{\backcard{73}{Physik}{\(E_\mathrm{pot}=mgh\).}}
+\cardrow
+{\backcard{76}{Physik}{Die in einer elastisch verformten Feder gespeicherte Energie.}}
+{\backcard{75}{Physik}{\(E_\mathrm{Feder}=\frac12 D x^2\).}}
+\cardrow
+{\backcard{78}{Physik}{Gespeicherte Lageenergie, etwa aufgrund der Höhe im Schwerefeld.}}
+{\backcard{77}{Physik}{Die Energie eines Körpers aufgrund seiner Bewegung.}}
+\cardrow
+{\backcard{80}{Physik}{\(F_G=mg\): Kraft in N, Masse in kg, Erdbeschleunigung in \(\mathrm{m/s^2}\).}}
+{\backcard{79}{Physik}{\(E=UQ\) und \(1\,\mathrm{Ah}=3600\,\mathrm C\); daher \(E[\mathrm J]=U[\mathrm V]Q[\mathrm{Ah}]3600\).}}
+\newpage
+\cardrow
+{\frontcard{81}{Physik}{Wie groß ist die Erdbeschleunigung g?}}
+{\frontcard{82}{Physik}{Wie kann man sich z. B. 500 N vorstellen?}}
+\cardrow
+{\frontcard{83}{Physik}{Wann ist ein Körper schwerelos?}}
+{\frontcard{84}{Physik}{Was versteht man unter einem Skalar bzw. einer skalaren Größe?}}
+\cardrow
+{\frontcard{85}{Physik}{Was versteht man unter einem Vektor bzw. einer vektoriellen Größe?}}
+{\frontcard{86}{Physik}{Was sind die drei Hauptkategorien von Energie?}}
+\cardrow
+{\frontcard{87}{Physik}{Was versteht man unter Energieerhaltung?}}
+{\frontcard{88}{Physik}{Welche SI-Einheit hat Energie?}}
+\cardrow
+{\frontcard{89}{Physik}{Welche SI-Einheit hat Leistung?}}
+{\frontcard{90}{Physik}{Was kann man sich unter Leistung P vorstellen?}}
+\newpage
+\cardrow
+{\backcard{82}{Physik}{\(500\,\mathrm N\) entsprechen ungefähr der Gewichtskraft einer Masse von \(51\,\mathrm{kg}\).}}
+{\backcard{81}{Physik}{Nahe der Erdoberfläche \(g=9{,}81\,\mathrm{m/s^2}\), näherungsweise \(10\,\mathrm{m/s^2}\).}}
+\cardrow
+{\backcard{84}{Physik}{Eine skalare Größe besitzt Zahlenwert und Einheit, aber keine Richtung.}}
+{\backcard{83}{Physik}{Wenn keine Stütz- oder Normalkraft wirkt, zum Beispiel im freien Fall.}}
+\cardrow
+{\backcard{86}{Physik}{Mechanische, thermische und innere beziehungsweise gespeicherte Energieformen.}}
+{\backcard{85}{Physik}{Eine vektorielle Größe besitzt Betrag, Richtung und Sinn.}}
+\cardrow
+{\backcard{88}{Physik}{Joule: \(1\,\mathrm J=1\,\mathrm{N\,m}\).}}
+{\backcard{87}{Physik}{Energie wird weder erzeugt noch vernichtet, nur übertragen oder umgewandelt; die Gesamtenergie bleibt erhalten.}}
+\cardrow
+{\backcard{90}{Physik}{Leistung ist umgesetzte Energie pro Zeit: \(P=\Delta E/\Delta t\).}}
+{\backcard{89}{Physik}{Watt: \(1\,\mathrm W=1\,\mathrm{J/s}\).}}
+\end{document}
