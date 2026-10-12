@@ -63,6 +63,7 @@ const ui = {
   settingTheme: /** @type {HTMLSelectElement} */ (byId('setting-theme')),
   clearProgress: byId('clear-progress'),
   resume: /** @type {HTMLDialogElement} */ (byId('resume')),
+  resumeTitle: byId('resume-title'),
   resumeMessage: byId('resume-message'),
   resumeContinue: byId('resume-continue'),
   resumeRestart: byId('resume-restart'),
@@ -343,6 +344,7 @@ async function openDeck(entry) {
     { counts: stored.counts, queue: stored.queue, total: stored.total },
     app.settings.requiredCorrect,
   );
+  ui.resumeTitle.textContent = 'Session fortsetzen?';
   ui.resumeMessage.textContent =
     `Für ${stored.deckTitle} ist eine Session offen: ${done} von ${stored.total} Karten fertig.`;
   ui.resume.returnValue = '';
@@ -798,6 +800,7 @@ function openTestSetup() {
     showTestSetup([]);
     return;
   }
+  ui.resumeTitle.textContent = 'Probetest fortsetzen?';
   ui.resumeMessage.textContent =
     `Ein Probetest ist offen: Frage ${stored.index + 1} von ${stored.questions.length}.`;
   ui.resume.showModal();
