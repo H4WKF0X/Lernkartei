@@ -7,14 +7,18 @@ import { parseDeck, DeckFormatError } from './parser.js';
 import { renderCard } from './render.js';
 import * as store from './store.js';
 import * as learn from './session.js';
+import * as quiz from './test.js';
 
 /**
  * @typedef {{ id: string, file: string, title: string, count: number, error?: string }} DeckEntry
  * @typedef {{ n: number, front: string, back: string }} Card
- * @typedef {{ entry: DeckEntry, title: string, cards: Map<number, Card>, state: learn.SessionState, startedAt: number, revealed: boolean }} Active
+ * @typedef {{ entry: DeckEntry, title: string, cards: Map<number, Card>, state: learn.SessionState, startedAt: number }} Active
+ * @typedef {{ deckIds: string[], questions: quiz.Question[], index: number, correct: number, startedAt: number }} RunningTest
  */
 
 const INDEX_FILE = 'decks/index.json';
+
+const DEFAULT_TEST_COUNT = 10;
 
 /**
  * Holt ein Element nach seiner Kennung.
@@ -32,9 +36,6 @@ function byId(id) {
 
 const ui = {
   storageHint: byId('storage-hint'),
-  viewHome: byId('view-home'),
-  viewSession: byId('view-session'),
-  viewDone: byId('view-done'),
   homeMessage: byId('home-message'),
   reloadIndex: byId('reload-index'),
   deckGrid: byId('deck-grid'),
@@ -66,6 +67,17 @@ const ui = {
   resumeContinue: byId('resume-continue'),
   resumeRestart: byId('resume-restart'),
   leaveSession: byId('leave-session'),
+  openTest: byId('open-test'),
+  leaveTestSetup: byId('leave-test-setup'),
+  openSettingsTest: byId('open-settings-test'),
+  testTopics: byId('test-topics'),
+  testCount: /** @type {HTMLInputElement} */ (byId('test-count')),
+  testAvailable: byId('test-available'),
+  testStart: /** @type {HTMLButtonElement} */ (byId('test-start')),
+  testScore: byId('test-score'),
+  testResult: byId('test-result'),
+  testAgain: byId('test-again'),
+  testToHome: byId('test-to-home'),
 };
 
 const app = {
@@ -75,8 +87,15 @@ const app = {
   decks: [],
   /** @type {Active | null} */
   active: null,
+  /** @type {RunningTest | null} */
+  test: null,
+  /** @type {string[]} */
+  lastTestDecks: [],
+  /** @type {string} */
+  mode: 'learn',
   /** @type {string} */
   view: 'home',
+  revealed: false,
   storageOk: true,
 };
 
@@ -143,9 +162,9 @@ export function relativeTime(then, now) {
  */
 function showView(name, push) {
   app.view = name;
-  ui.viewHome.hidden = name !== 'home';
-  ui.viewSession.hidden = name !== 'session';
-  ui.viewDone.hidden = name !== 'done';
+  for (const section of document.querySelectorAll('.view')) {
+    section.hidden = section.id !== `view-${name}`;
+  }
   if (push) {
     history.pushState({ view: name }, '');
   }
@@ -212,6 +231,15 @@ function renderHome() {
   const sessions = store.readAllSessions().filter((session) => known.has(session.deckId));
   ui.sessionGrid.replaceChildren();
   const now = Date.now();
+  const openTest = store.readTest();
+  if (openTest !== null) {
+    const meta = `${openTest.index}/${openTest.questions.length} · ${relativeTime(openTest.updatedAt, now)}`;
+    ui.sessionGrid.append(
+      buildTile('Probetest', meta, true, () => {
+        resumeTest(openTest);
+      }),
+    );
+  }
   for (const session of sessions) {
     const entry = known.get(session.deckId);
     if (entry === undefined) {
@@ -228,7 +256,7 @@ function renderHome() {
       }),
     );
   }
-  ui.openSessions.hidden = sessions.length === 0;
+  ui.openSessions.hidden = sessions.length === 0 && openTest === null;
 }
 
 /**
@@ -390,8 +418,9 @@ async function startSession(entry, resume) {
     cards: new Map(deck.cards.map((card) => [card.n, card])),
     state,
     startedAt,
-    revealed: false,
   };
+  app.mode = 'learn';
+  app.test = null;
 
   ui.sessionTitle.textContent = title;
   ui.sessionWarnings.hidden = notes.length === 0;
@@ -476,7 +505,48 @@ function measureCard() {
 }
 
 /**
- * Zeigt die vorderste Karte mit der Frageseite nach oben.
+ * Zeigt eine Karte mit der Frageseite nach oben.
+ *
+ * Diese Funktion gilt für die Session und für den Probetest.
+ *
+ * @param {Card} card Die Karte.
+ * @param {boolean} fade true, wenn die neue Karte eingeblendet wird.
+ * @returns {void}
+ */
+function showCard(card, fade) {
+  /** @type {{ renderToString: (src: string, options: object) => string }} */
+  let katex;
+  try {
+    katex = katexLib();
+  } catch {
+    setHomeMessage('KaTeX fehlt im Ordner vendor/. Die App kann keine Karten anzeigen.', false);
+    goHome();
+    return;
+  }
+  app.revealed = false;
+  setAnswersEnabled(false);
+  ui.frontNumber.textContent = String(card.n);
+  ui.backNumber.textContent = String(card.n);
+  ui.frontText.innerHTML = renderCard(card.front, katex);
+  ui.backText.innerHTML = renderCard(card.back, katex);
+
+  ui.cardInner.classList.add('instant');
+  ui.cardInner.classList.remove('flipped');
+  if (fade) {
+    ui.card.classList.add('fading');
+    void ui.card.offsetHeight;
+  }
+  measureCard();
+
+  window.requestAnimationFrame(() => {
+    ui.cardInner.classList.remove('instant');
+    ui.card.classList.remove('fading');
+    measureCard();
+  });
+}
+
+/**
+ * Zeigt die vorderste Karte der Session mit der Frageseite nach oben.
  *
  * @param {boolean} fade true, wenn die neue Karte eingeblendet wird.
  * @returns {void}
@@ -495,37 +565,8 @@ function showCurrentCard(fade) {
   if (card === undefined) {
     return;
   }
-
-  /** @type {{ renderToString: (src: string, options: object) => string }} */
-  let katex;
-  try {
-    katex = katexLib();
-  } catch {
-    setHomeMessage('KaTeX fehlt im Ordner vendor/. Die App kann keine Karten anzeigen.', false);
-    goHome();
-    return;
-  }
-  active.revealed = false;
-  setAnswersEnabled(false);
-  ui.frontNumber.textContent = String(n);
-  ui.backNumber.textContent = String(n);
-  ui.frontText.innerHTML = renderCard(card.front, katex);
-  ui.backText.innerHTML = renderCard(card.back, katex);
-
-  ui.cardInner.classList.add('instant');
-  ui.cardInner.classList.remove('flipped');
-  if (fade) {
-    ui.card.classList.add('fading');
-    void ui.card.offsetHeight;
-  }
-  measureCard();
+  showCard(card, fade);
   updateProgress();
-
-  window.requestAnimationFrame(() => {
-    ui.cardInner.classList.remove('instant');
-    ui.card.classList.remove('fading');
-    measureCard();
-  });
 }
 
 /**
@@ -545,13 +586,12 @@ function setAnswersEnabled(enabled) {
  * @returns {void}
  */
 function flipCard() {
-  const active = app.active;
-  if (active === null) {
+  if (app.active === null && app.test === null) {
     return;
   }
   const flipped = ui.cardInner.classList.toggle('flipped');
   if (flipped) {
-    active.revealed = true;
+    app.revealed = true;
     setAnswersEnabled(true);
   }
 }
@@ -563,8 +603,15 @@ function flipCard() {
  * @returns {void}
  */
 function submitAnswer(correct) {
+  if (!app.revealed) {
+    return;
+  }
+  if (app.mode === 'test') {
+    submitTestAnswer(correct);
+    return;
+  }
   const active = app.active;
-  if (active === null || !active.revealed) {
+  if (active === null) {
     return;
   }
   active.state = learn.answer(
@@ -606,6 +653,8 @@ function showDone(push) {
  */
 function goHome() {
   app.active = null;
+  app.test = null;
+  app.mode = 'learn';
   renderHome();
   showView('home', true);
 }
@@ -643,6 +692,299 @@ function onSettingsChanged() {
 }
 
 /**
+ * Gibt die Kennungen der angekreuzten Themen.
+ *
+ * @returns {string[]} Die Kennungen in der Reihenfolge der Liste.
+ */
+function selectedDeckIds() {
+  const boxes = ui.testTopics.querySelectorAll('input[type="checkbox"]');
+  /** @type {string[]} */
+  const ids = [];
+  for (const box of boxes) {
+    if (box instanceof HTMLInputElement && box.checked) {
+      ids.push(box.value);
+    }
+  }
+  return ids;
+}
+
+/**
+ * Zählt die Karten der angekreuzten Themen.
+ *
+ * @returns {number} Anzahl der Karten.
+ */
+function availableCards() {
+  const ids = new Set(selectedDeckIds());
+  let total = 0;
+  for (const entry of app.decks) {
+    if (ids.has(entry.id)) {
+      total += typeof entry.count === 'number' ? entry.count : 0;
+    }
+  }
+  return total;
+}
+
+/**
+ * Richtet das Zahlenfeld an der Anzahl der gewählten Karten aus.
+ *
+ * @param {boolean} reset true setzt den Vorgabewert.
+ * @returns {void}
+ */
+function updateTestLimits(reset) {
+  const available = availableCards();
+  ui.testCount.max = String(Math.max(1, available));
+  ui.testAvailable.textContent =
+    available > 0
+      ? `${available} Karten stehen zur Wahl.`
+      : 'Wähle mindestens ein Thema.';
+  const typed = Number.parseInt(ui.testCount.value, 10);
+  const wanted = reset || !Number.isInteger(typed) ? DEFAULT_TEST_COUNT : typed;
+  ui.testCount.value = available > 0 ? String(Math.min(available, Math.max(1, wanted))) : '';
+  ui.testStart.disabled = available === 0;
+}
+
+/**
+ * Zeichnet die Themenliste des Probetests.
+ *
+ * @param {string[]} selected Kennungen, die angekreuzt sein sollen.
+ * @returns {void}
+ */
+function renderTopics(selected) {
+  ui.testTopics.replaceChildren();
+  for (const entry of app.decks) {
+    if (typeof entry.error === 'string' && entry.error.length > 0) {
+      continue;
+    }
+    const row = document.createElement('label');
+    row.className = 'topic';
+    const box = document.createElement('input');
+    box.type = 'checkbox';
+    box.value = entry.id;
+    box.checked = selected.includes(entry.id);
+    box.addEventListener('change', () => updateTestLimits(false));
+    const title = document.createElement('span');
+    title.className = 'topic-title';
+    title.textContent = entry.title;
+    const meta = document.createElement('span');
+    meta.className = 'meta';
+    meta.textContent = `${entry.count} Karten`;
+    row.append(box, title, meta);
+    ui.testTopics.append(row);
+  }
+}
+
+/**
+ * Zeigt die Auswahl für einen Probetest.
+ *
+ * @param {string[]} selected Kennungen, die angekreuzt sein sollen.
+ * @returns {void}
+ */
+function showTestSetup(selected) {
+  renderTopics(selected);
+  updateTestLimits(true);
+  showView('test-setup', true);
+}
+
+/**
+ * Reagiert auf den Knopf "Probetest starten".
+ *
+ * Läuft schon ein Test, fragt die App zuerst nach.
+ *
+ * @returns {void}
+ */
+function openTestSetup() {
+  const stored = store.readTest();
+  if (stored === null) {
+    showTestSetup([]);
+    return;
+  }
+  ui.resumeMessage.textContent =
+    `Ein Probetest ist offen: Frage ${stored.index + 1} von ${stored.questions.length}.`;
+  ui.resume.showModal();
+  ui.resumeContinue.onclick = () => {
+    ui.resume.close();
+    resumeTest(stored);
+  };
+  ui.resumeRestart.onclick = () => {
+    ui.resume.close();
+    store.deleteTest();
+    showTestSetup(stored.deckIds);
+  };
+}
+
+/**
+ * Schreibt den Stand des laufenden Probetests.
+ *
+ * @returns {void}
+ */
+function persistTest() {
+  const test = app.test;
+  if (test === null) {
+    return;
+  }
+  const ok = store.writeTest({
+    schemaVersion: 1,
+    startedAt: test.startedAt,
+    updatedAt: Date.now(),
+    deckIds: test.deckIds,
+    questions: test.questions,
+    index: test.index,
+    correct: test.correct,
+  });
+  if (!ok && app.storageOk) {
+    app.storageOk = false;
+    ui.storageHint.hidden = false;
+  }
+}
+
+/**
+ * Setzt den Fortschritt des Probetests in die Kopfzeile.
+ *
+ * @returns {void}
+ */
+function updateTestProgress() {
+  const test = app.test;
+  if (test === null) {
+    return;
+  }
+  ui.sessionProgress.textContent = `Frage ${test.index + 1} von ${test.questions.length}`;
+}
+
+/**
+ * Zeigt die aktuelle Frage des Probetests.
+ *
+ * @param {boolean} fade true, wenn die neue Karte eingeblendet wird.
+ * @returns {void}
+ */
+function showTestCard(fade) {
+  const test = app.test;
+  if (test === null) {
+    return;
+  }
+  const question = quiz.currentQuestion(test);
+  if (question === null) {
+    finishTest(true);
+    return;
+  }
+  showCard(question, fade);
+  updateTestProgress();
+}
+
+/**
+ * Wechselt in die Test-Ansicht.
+ *
+ * @returns {void}
+ */
+function enterTestRun() {
+  app.mode = 'test';
+  app.active = null;
+  ui.sessionTitle.textContent = 'Probetest';
+  ui.sessionWarnings.hidden = true;
+  showView('session', true);
+  showTestCard(false);
+}
+
+/**
+ * Startet einen Probetest mit der getroffenen Auswahl.
+ *
+ * @returns {Promise<void>} Erfüllt, wenn der Test läuft oder eine Meldung
+ *   steht.
+ */
+async function startTest() {
+  const ids = selectedDeckIds();
+  if (ids.length === 0) {
+    return;
+  }
+  /** @type {{ id: string, title: string, cards: Card[] }[]} */
+  const decks = [];
+  for (const entry of app.decks.filter((item) => ids.includes(item.id))) {
+    try {
+      decks.push(await fetchDeck(entry));
+    } catch (error) {
+      const message =
+        error instanceof DeckFormatError
+          ? error.message
+          : `Datei ${entry.file} konnte nicht gelesen werden.`;
+      markDeckBroken(entry.id, message);
+      setHomeMessage(message, false);
+      goHome();
+      return;
+    }
+  }
+  const typed = Number.parseInt(ui.testCount.value, 10);
+  const count = Number.isInteger(typed) ? typed : DEFAULT_TEST_COUNT;
+  const questions = quiz.buildQuestions(decks, ids, count, Math.random);
+  if (questions.length === 0) {
+    setHomeMessage('In den gewählten Themen wurden keine Karten gefunden.', false);
+    goHome();
+    return;
+  }
+  app.test = { deckIds: ids, questions, index: 0, correct: 0, startedAt: Date.now() };
+  persistTest();
+  enterTestRun();
+}
+
+/**
+ * Setzt einen gespeicherten Probetest fort.
+ *
+ * @param {store.StoredTest} stored Der gespeicherte Stand.
+ * @returns {void}
+ */
+function resumeTest(stored) {
+  app.test = {
+    deckIds: stored.deckIds,
+    questions: stored.questions,
+    index: stored.index,
+    correct: stored.correct,
+    startedAt: stored.startedAt,
+  };
+  enterTestRun();
+}
+
+/**
+ * Verarbeitet eine Antwort im Probetest.
+ *
+ * @param {boolean} correct true bei "Gewusst".
+ * @returns {void}
+ */
+function submitTestAnswer(correct) {
+  const test = app.test;
+  if (test === null) {
+    return;
+  }
+  const next = quiz.answerQuestion(test, correct);
+  app.test = { ...test, index: next.index, correct: next.correct };
+  persistTest();
+  if (quiz.currentQuestion(app.test) === null) {
+    finishTest(true);
+    return;
+  }
+  showTestCard(true);
+}
+
+/**
+ * Zeigt das Ergebnis und löscht den Probetest.
+ *
+ * @param {boolean} push true, wenn ein History-Eintrag entsteht.
+ * @returns {void}
+ */
+function finishTest(push) {
+  const test = app.test;
+  if (test === null) {
+    return;
+  }
+  const total = test.questions.length;
+  ui.testScore.textContent = `${quiz.scoreOf(test.correct, total)} %`;
+  ui.testResult.textContent = `${test.correct} von ${total} richtig.`;
+  app.lastTestDecks = test.deckIds;
+  store.deleteTest();
+  app.test = null;
+  app.mode = 'learn';
+  showView('test-done', push);
+  renderHome();
+}
+
+/**
  * Verbindet alle Ereignisse.
  *
  * @returns {void}
@@ -653,6 +995,14 @@ function wireEvents() {
   ui.answerWrong.addEventListener('click', () => submitAnswer(false));
   ui.leaveSession.addEventListener('click', goHome);
   ui.toHome.addEventListener('click', goHome);
+  ui.openTest.addEventListener('click', openTestSetup);
+  ui.leaveTestSetup.addEventListener('click', goHome);
+  ui.testToHome.addEventListener('click', goHome);
+  ui.testAgain.addEventListener('click', () => showTestSetup(app.lastTestDecks));
+  ui.testStart.addEventListener('click', () => {
+    void startTest();
+  });
+  ui.testCount.addEventListener('change', () => updateTestLimits(false));
   ui.reloadIndex.addEventListener('click', () => {
     void loadIndex();
   });
@@ -670,7 +1020,7 @@ function wireEvents() {
     ui.sessionWarnings.hidden = true;
   });
 
-  for (const button of [ui.openSettings, ui.openSettingsSession]) {
+  for (const button of [ui.openSettings, ui.openSettingsSession, ui.openSettingsTest]) {
     button.addEventListener('click', () => {
       ui.settingRequired.value = String(app.settings.requiredCorrect);
       ui.settingOrder.value = app.settings.order;
@@ -696,6 +1046,8 @@ function wireEvents() {
       return;
     }
     store.clearAll();
+    app.test = null;
+    app.mode = 'learn';
     app.settings = { ...store.DEFAULT_SETTINGS };
     applyTheme(app.settings.theme);
     ui.settingRequired.value = String(app.settings.requiredCorrect);
@@ -712,10 +1064,13 @@ function wireEvents() {
     const data = /** @type {{ view?: string } | null} */ (event.state);
     const wanted = data !== null && typeof data.view === 'string' ? data.view : 'home';
     const active = app.active;
-    const runs = active !== null && learn.currentCard(active.state) !== null;
-    const name = wanted === 'session' && !runs ? 'home' : wanted;
+    const runsSession = active !== null && learn.currentCard(active.state) !== null;
+    const runsTest = app.test !== null && quiz.currentQuestion(app.test) !== null;
+    const name = wanted === 'session' && !runsSession && !runsTest ? 'home' : wanted;
     if (name === 'home') {
       app.active = null;
+      app.test = null;
+      app.mode = 'learn';
       renderHome();
     }
     showView(name, false);

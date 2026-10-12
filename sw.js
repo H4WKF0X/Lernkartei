@@ -29,6 +29,7 @@ const SHELL = [
   'js/render.js',
   'js/session.js',
   'js/store.js',
+  'js/test.js',
   'vendor/katex/katex.min.css',
   'vendor/katex/katex.min.js',
   'vendor/katex/mhchem.min.js',

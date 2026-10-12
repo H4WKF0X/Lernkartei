@@ -32,10 +32,39 @@
 
         <div id="deck-grid" class="grid"></div>
 
+        <div class="answers">
+          <button type="button" id="open-test" class="answer">Probetest starten</button>
+        </div>
+
         <section id="open-sessions" hidden>
           <h2>Offene Sessions</h2>
           <div id="session-grid" class="grid"></div>
         </section>
+      </section>
+
+      <section id="view-test-setup" class="view" hidden>
+        <header class="bar">
+          <button type="button" id="leave-test-setup" class="text-button" aria-label="Zurück zur Übersicht">
+            &#8592; Probetest
+          </button>
+          <button type="button" id="open-settings-test" class="icon-button" aria-label="Einstellungen">
+            <span aria-hidden="true">&#9881;</span>
+          </button>
+        </header>
+
+        <p class="message">Jede Karte kommt genau einmal. Am Ende steht das Ergebnis in Prozent.</p>
+
+        <div id="test-topics" class="topics"></div>
+
+        <label class="field">
+          <span>Anzahl Fragen</span>
+          <input type="number" id="test-count" min="1" step="1" inputmode="numeric" />
+          <span class="meta" id="test-available"></span>
+        </label>
+
+        <div class="answers">
+          <button type="button" id="test-start" class="answer" disabled>Test starten</button>
+        </div>
       </section>
 
       <section id="view-session" class="view" hidden>
@@ -73,6 +102,18 @@
         <div class="answers">
           <button type="button" id="answer-wrong" class="answer" disabled>Nicht gewusst</button>
           <button type="button" id="answer-right" class="answer" disabled>Gewusst</button>
+        </div>
+      </section>
+
+      <section id="view-test-done" class="view" hidden>
+        <header class="bar">
+          <h1>Ergebnis</h1>
+        </header>
+        <p id="test-score" class="score"></p>
+        <p id="test-result" class="message"></p>
+        <div class="answers">
+          <button type="button" id="test-again" class="answer">Nochmal</button>
+          <button type="button" id="test-to-home" class="answer">Zur Übersicht</button>
         </div>
       </section>
 

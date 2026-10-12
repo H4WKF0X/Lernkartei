@@ -7,6 +7,7 @@
 
 const PREFIX = 'nawi:';
 const SETTINGS_KEY = `${PREFIX}settings`;
+const TEST_KEY = `${PREFIX}test`;
 const SCHEMA_VERSION = 1;
 
 const ORDERS = ['random', 'sequential'];
@@ -15,6 +16,7 @@ const THEMES = ['auto', 'light', 'dark'];
 /**
  * @typedef {{ schemaVersion: number, requiredCorrect: number, order: string, theme: string }} Settings
  * @typedef {{ schemaVersion: number, deckId: string, deckTitle: string, startedAt: number, updatedAt: number, counts: Record<string, number>, queue: number[], total: number }} StoredSession
+ * @typedef {{ schemaVersion: number, startedAt: number, updatedAt: number, deckIds: string[], questions: { deckId: string, n: number, front: string, back: string }[], index: number, correct: number }} StoredTest
  */
 
 /** @type {Settings} */
@@ -243,6 +245,74 @@ export function readAllSessions() {
   }
   sessions.sort((a, b) => b.updatedAt - a.updatedAt);
   return sessions;
+}
+
+/**
+ * Liest den offenen Probetest.
+ *
+ * Ein Eintrag mit unbekannter schemaVersion oder falschem Aufbau wird
+ * verworfen.
+ *
+ * @returns {StoredTest | null} Der Probetest, oder null.
+ */
+export function readTest() {
+  const raw = readJson(TEST_KEY);
+  if (raw === null || typeof raw !== 'object') {
+    return null;
+  }
+  const data = /** @type {Record<string, unknown>} */ (raw);
+  if (data.schemaVersion !== SCHEMA_VERSION) {
+    removeKey(TEST_KEY);
+    return null;
+  }
+  if (!Array.isArray(data.questions) || !Array.isArray(data.deckIds)) {
+    removeKey(TEST_KEY);
+    return null;
+  }
+  const questions = data.questions.filter(
+    (q) =>
+      typeof q === 'object' &&
+      q !== null &&
+      typeof q.deckId === 'string' &&
+      Number.isInteger(q.n) &&
+      typeof q.front === 'string' &&
+      typeof q.back === 'string',
+  );
+  if (questions.length !== data.questions.length || questions.length === 0) {
+    removeKey(TEST_KEY);
+    return null;
+  }
+  const index = isIntegerInRange(data.index, 0, questions.length) ? data.index : 0;
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    startedAt: typeof data.startedAt === 'number' ? data.startedAt : 0,
+    updatedAt: typeof data.updatedAt === 'number' ? data.updatedAt : 0,
+    deckIds: data.deckIds.filter((id) => typeof id === 'string'),
+    questions,
+    index: /** @type {number} */ (index),
+    correct: isIntegerInRange(data.correct, 0, questions.length)
+      ? /** @type {number} */ (data.correct)
+      : 0,
+  };
+}
+
+/**
+ * Schreibt den offenen Probetest.
+ *
+ * @param {StoredTest} test Der Probetest.
+ * @returns {boolean} true, wenn das Schreiben geklappt hat.
+ */
+export function writeTest(test) {
+  return writeJson(TEST_KEY, { ...test, schemaVersion: SCHEMA_VERSION });
+}
+
+/**
+ * Löscht den offenen Probetest.
+ *
+ * @returns {void}
+ */
+export function deleteTest() {
+  removeKey(TEST_KEY);
 }
 
 /**
